@@ -1,0 +1,80 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Song+Myung&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><title>가정통신문 · 태화여자고등학교</title></head><body>
+<header class="site"><div class="wrap"><a class="brand" href="index.html">태화여자고등학교<small>TAEHWA GIRLS' HIGH SCHOOL</small></a>
+<nav class="site"><a href="index.html" class="">학교소개</a><a href="notice.html" class="">공지사항</a><a href="letter.html" class="on">가정통신문</a></nav></div></header>
+<div class="banner"><div class="wrap">📌 3학년 3반 · <a href="letter.html">개화 기념 등교 안내 및 참석 회신서</a> 접수 중</div></div>
+<main><div class="wrap">
+<article class="letter">
+<div class="no"><span>태화여자고등학교 가정통신문 제2025-31호</span><span>2025. 8. 21.(목)</span></div>
+<h1>개화 기념 등교 안내</h1>
+<p>학부모님, 안녕하십니까.</p>
+<p>길고 어려운 시간을 지나 태화시에 다시 꽃이 피었습니다. 그동안 학생들의 안전을 지켜 주신 가정에 깊이 감사드립니다.</p>
+<p>본교는 감염관리국의 사태 종식 선언과 개화를 기념하여, 사태 당시 학교에 함께 있었던 3학년 3반 학생들을 대상으로 아래와 같이 기념 등교를 실시합니다. 다섯 명의 학생이 다시 한 교실에 모이는 자리입니다. 바쁘시더라도 회신서를 꼭 제출해 주시기 바랍니다.</p>
+<dl>
+<dt>일시</dt><dd>2025년 8월 23일(토) 08:00 등교</dd>
+<dt>대상</dt><dd>3학년 3반 학생</dd>
+<dt>장소</dt><dd>본관 3층 3학년 3반 교실</dd>
+<dt>준비물</dt><dd>교복, 명찰, 필기구</dd>
+</dl>
+<p><b>유의 사항</b></p>
+<ol>
+<li>모든 학생은 정문 검역 게이트를 통과한 뒤 경비실 등교 명부에 서명합니다.</li>
+<li>게이트 판정에 따라 학교 출입이 통제될 수 있습니다.</li>
+<li>교내 통신이 원활하지 않을 수 있으니, 가정과의 연락은 등교 전에 마쳐 주십시오.</li>
+<li>학교에서 오간 이야기는 학교 밖에서 함부로 옮기지 않도록 지도해 주십시오.</li>
+</ol>
+<p>그날 아침, 교실에서 다섯 명 모두를 기다리겠습니다.</p>
+<p class="sign">2025. 8. 21.<br>3학년 3반 담임 <b>남우혜</b><br>태화여자고등학교장</p>
+
+<div class="cut">자르는 선</div>
+
+<section class="reply" id="reply">
+<h2>개화 기념 등교 참석 회신서</h2>
+<p class="sub">3학년 3반</p>
+<div style="text-align:center"><span class="status" id="slots">자리 확인 중</span></div>
+<form id="f">
+<div class="field"><label class="t" for="nick">학생 성명 (밴드 닉네임)</label><input type="text" id="nick" maxlength="20" autocomplete="off" required></div>
+<div class="field"><label class="t">참석 일시 (참석 가능하면 체크하세요)</label><div class="checks" id="dates"></div></div>
+<div class="field"><label class="t">보호자 확인</label><div class="checks">
+<label><input type="checkbox" id="agree"> <span>진행 중 범인 외에는 거짓말을 하지 않으며, 답하기 싫은 질문은 거부할 수 있음을 확인합니다. 진행 중 알게 된 내용은 외부에 공유하지 않습니다.</span></label>
+</div></div>
+<button class="btn dark" id="submit" type="submit" disabled>회신서 제출</button>
+<div id="out"></div>
+</form>
+</section>
+</article>
+</div></main>
+<footer class="site"><div class="wrap">태화여자고등학교 · 태화시 · 교무실 대표 전화 연결이 원활하지 않을 수 있습니다.</div></footer>
+<script src="config.js"></script><script src="app.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+$('dates').innerHTML = TH.CANDIDATE_DATES.map((d,i)=>`<label><input type="checkbox" name="d" value="${esc(d)}"> <span>${esc(d)}</span></label>`).join('');
+let state = {remaining:0, open:false};
+function render(){
+  $('slots').textContent = !state.open ? "접수가 마감되었습니다." : slotText(state.remaining);
+  $('submit').disabled = !state.open || state.remaining <= 0;
+}
+async function refresh(){
+  try { state = await rpc('get_status'); render(); }
+  catch(e){ $('slots').textContent = "접수 상태를 불러오지 못했습니다"; }
+}
+const ERR = {nickname:"닉네임을 1~20자로 적어 주세요.", dates:"참석 일시에 체크해 주세요.", full:"자리가 모두 찼습니다.", closed:"접수가 마감되었습니다.", duplicate:"이미 같은 이름으로 제출된 회신서가 있습니다."};
+$('f').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const out = $('out'); out.innerHTML = "";
+  const nick = $('nick').value.trim();
+  const dates = [...document.querySelectorAll('input[name=d]:checked')].map(x=>x.value);
+  if(!nick) { out.innerHTML = `<div class="msg err">${ERR.nickname}</div>`; return; }
+  if(!dates.length) { out.innerHTML = `<div class="msg err">${ERR.dates}</div>`; return; }
+  if(!$('agree').checked) { out.innerHTML = `<div class="msg err">보호자 확인란에 체크해 주세요.</div>`; return; }
+  $('submit').disabled = true;
+  try {
+    const r = await rpc('submit_reply', {p_nickname: nick, p_dates: dates});
+    if(!r.ok){ out.innerHTML = `<div class="msg err">${ERR[r.error] || "제출하지 못했습니다."}</div>`; await refresh(); return; }
+    state.remaining = r.remaining;
+    $('f').outerHTML = `<div class="done"><div class="stamp">태화여고<br>회신서<br>접수</div><p><b>${esc(nick)}</b> 학생의 회신서가 접수되었습니다.</p><p class="status">${slotText(r.remaining)}</p><p class="muted">일정은 밴드로 안내드립니다.</p></div>`;
+    $('slots').textContent = slotText(r.remaining);
+  } catch(e){ out.innerHTML = `<div class="msg err">제출 중 문제가 생겼습니다. 잠시 뒤 다시 시도해 주세요.</div>`; $('submit').disabled = false; }
+});
+refresh();
+</script>
+</body></html>

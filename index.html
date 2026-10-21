@@ -1,0 +1,12 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Song+Myung&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><title>태화여자고등학교</title></head><body>
+<header class="site"><div class="wrap"><a class="brand" href="index.html">태화여자고등학교<small>TAEHWA GIRLS' HIGH SCHOOL</small></a>
+<nav class="site"><a href="index.html" class="on">학교소개</a><a href="notice.html" class="">공지사항</a><a href="letter.html" class="">가정통신문</a></nav></div></header>
+<div class="banner"><div class="wrap">📌 3학년 3반 · <a href="letter.html">개화 기념 등교 안내 및 참석 회신서</a> 접수 중</div></div>
+<main><div class="wrap">
+<section class="hero"><h1>개화 기념 등교</h1><p>3학년 3반 학생을 대상으로 8월 23일 등교를 안내드립니다.</p><a class="btn" href="letter.html">가정통신문 보기</a></section>
+<div class="grid">
+<section><h2>공지사항</h2><table class="list" id="recent"></table><p><a href="notice.html">전체 보기 →</a></p></section>
+<section><h2>학교 안내</h2><div class="card"><p>태화여자고등학교는 태화시에 있는 공립 여자 고등학교입니다. 개화 준비 기간(8.18~8.22) 동안 교직원 출입이 재개되었으며, 8월 23일 3학년 3반 학생을 대상으로 기념 등교가 진행됩니다.</p><p class="muted">모든 방문자는 정문 검역 게이트를 통과해야 합니다.</p></div></section>
+</div></div></main>
+<script src="notices.js"></script><script>document.getElementById('recent').innerHTML=NOTICES.slice(0,3).map(n=>`<tr><td><a href="${n.href}">${n.title}</a></td><td class="date">${n.date}</td></tr>`).join('')</script>
+<footer class="site"><div class="wrap">태화여자고등학교 · 태화시 · 교무실 대표 전화 연결이 원활하지 않을 수 있습니다.</div></footer></body></html>

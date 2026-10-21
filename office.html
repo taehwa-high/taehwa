@@ -1,0 +1,55 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Song+Myung&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><title>교무실 · 태화여자고등학교</title></head><body>
+<header class="site"><div class="wrap"><a class="brand" href="index.html">태화여자고등학교<small>교무실 · 관리자 전용</small></a></div></header>
+<main><div class="wrap">
+<h1>회신서 관리</h1>
+<div id="login" class="card" style="max-width:420px">
+<form id="lf"><div class="field"><label class="t" for="pw">교무실 비밀번호</label><input type="password" id="pw" required></div><button class="btn dark">열기</button><div id="lout"></div></form>
+</div>
+<div id="panel" hidden>
+<p class="lead" id="summary"></p>
+<p><button class="btn ghost" id="reload">새로고침</button> <button class="btn ghost" id="toggle"></button> <button class="btn ghost" id="logout">잠그기</button></p>
+<h2>참석 일시 집계</h2><div class="tally" id="tally"></div>
+<h2>접수된 회신서</h2>
+<div style="overflow-x:auto"><table class="list" style="min-width:600px"><thead><tr><th class="num">번호</th><th style="white-space:nowrap">닉네임</th><th>참석 일시</th><th>제출 시각</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+<p class="muted">회신서를 삭제하면 그 자리가 바로 다시 열립니다.</p>
+</div>
+</div></main>
+<script src="config.js"></script><script src="app.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+let pw = ""; try { pw = sessionStorage.getItem('th_pw') || ""; } catch(e){}
+let data = null;
+function fmt(t){ const d = new Date(t); return d.toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}); }
+function render(){
+  const s = data.status;
+  $('summary').textContent = `정원 ${data.capacity}명 · 접수 ${data.rows.length}명 · ${s.open ? slotText(s.remaining) : "접수 마감 상태"}`;
+  $('toggle').textContent = s.open ? "접수 마감하기" : "접수 다시 열기";
+  const count = {}; TH.CANDIDATE_DATES.forEach(d => count[d] = 0);
+  data.rows.forEach(r => r.dates.forEach(d => count[d] = (count[d]||0) + 1));
+  $('tally').innerHTML = Object.entries(count).map(([d,n]) => `<span>${esc(d)} <b>${n}명</b></span>`).join('');
+  $('rows').innerHTML = data.rows.length ? data.rows.map((r,i) => `<tr><td class="num">${i+1}</td><td style="white-space:nowrap">${esc(r.nickname)}</td><td style="white-space:nowrap">${r.dates.map(esc).join('<br>')}</td><td class="date">${fmt(r.created_at)}</td><td style="white-space:nowrap"><button class="btn ghost" data-id="${r.id}" data-n="${esc(r.nickname)}">삭제</button></td></tr>`).join('') : `<tr><td colspan="5" class="muted">아직 접수된 회신서가 없습니다.</td></tr>`;
+}
+async function load(){
+  data = await rpc('office_list', {p_password: pw});
+  $('login').hidden = true; $('panel').hidden = false; render();
+}
+$('lf').addEventListener('submit', async ev => {
+  ev.preventDefault(); pw = $('pw').value; $('lout').innerHTML = "";
+  try { await load(); try { sessionStorage.setItem('th_pw', pw); } catch(e){} }
+  catch(e){ $('lout').innerHTML = `<div class="msg err">${esc(e.message)}</div>`; }
+});
+$('rows').addEventListener('click', async ev => {
+  const b = ev.target.closest('button[data-id]'); if(!b) return;
+  if(!confirm(`${b.dataset.n} 학생의 회신서를 삭제할까요? 삭제하면 자리가 하나 다시 열립니다.`)) return;
+  b.disabled = true;
+  try { await rpc('office_delete', {p_password: pw, p_id: Number(b.dataset.id)}); await load(); }
+  catch(e){ alert(e.message); b.disabled = false; }
+});
+$('toggle').addEventListener('click', async () => {
+  try { await rpc('office_set_open', {p_password: pw, p_open: !data.status.open}); await load(); } catch(e){ alert(e.message); }
+});
+$('reload').addEventListener('click', () => load().catch(e => alert(e.message)));
+$('logout').addEventListener('click', () => { try { sessionStorage.removeItem('th_pw'); } catch(e){} location.reload(); });
+if(pw) load().catch(() => { pw = ""; });
+</script>
+</body></html>
