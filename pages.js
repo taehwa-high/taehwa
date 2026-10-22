@@ -51,7 +51,7 @@ symbol: {sec:"학교소개", t:"교가·교표", html:`
 <tr><th>상징색</th><td><i class="sw" style="background:#1f4e3d"></i>태화 녹색 &nbsp; <i class="sw" style="background:#c9a24b"></i>목련 금색</td></tr>
 </tbody></table>
 <h3 class="sub">교가</h3>
-<div class="song"><p class="cr">작사 한정숙 · 작곡 이도윤</p>
+<div class="song"><p class="cr">작사 남궁녹차 · 작곡 제갈파도</p>
 <div class="vs"><b>1절</b><p>태화산 푸른 기슭 은행잎 곱게 물들면<br>맑은 꿈 품에 안고 우리 여기 모였네<br>참되고 바르게 아름답게 살리라<br>빛나라 태화여고 영원한 우리 교정</p></div>
 <div class="vs"><b>2절</b><p>목련꽃 피는 아침 종소리 멀리 퍼지면<br>손잡고 함께 걸어 배움의 길 가리라<br>정성과 어울림 가슴 깊이 새기며<br>빛나라 태화여고 영원한 우리 교정</p></div></div>`},
 
