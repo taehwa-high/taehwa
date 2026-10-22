@@ -82,8 +82,8 @@ cal: {sec:"학사안내", t:"학사일정", html:`
 <table class="tbl sched"><thead><tr><th>날짜</th><th>내용</th><th>비고</th></tr></thead><tbody>
 <tr><td>10. 26.(수) ~ 10. 30.(일)</td><td>개학 준비 기간</td><td>교직원 출입</td></tr>
 <tr><td>10. 31.(월)</td><td><b>전교 개학</b> · 담임 조회 · 안전 교육</td><td>단축 수업</td></tr>
-<tr><td>11. 1.(화)</td><td>급식 재개 (3학년)</td><td>순차 재개</td></tr>
-<tr><td>11. 3.(목)</td><td>학생독립운동기념일 기념 조회 · 전 학년 급식</td><td></td></tr>
+<tr><td>11. 1.(화)</td><td>급식 재개 (전 학년)</td><td></td></tr>
+<tr><td>11. 3.(목)</td><td>학생독립운동기념일 기념 조회</td><td></td></tr>
 <tr><td>11. 7.(월) ~ 11. 9.(수)</td><td>학력 진단 평가 (1·2학년)</td><td></td></tr>
 <tr><td>11. 17.(목)</td><td>대학수학능력시험</td><td>교육부 발표에 따름</td></tr>
 <tr><td>11. 21.(월)</td><td>2학기 방과후학교 개강</td><td>예정</td></tr>
@@ -107,7 +107,7 @@ curri: {sec:"학사안내", t:"교육과정", html:`
 <div class="note">휴업 기간 동안 진행하지 못한 수업은 11월부터 보충 수업으로 운영합니다. 세부 과목별 평가 계획은 개학 후 각 교과 담당 교사가 안내합니다.</div>`},
 
 meal: {sec:"학교생활", t:"급식 안내", html:`
-<div class="note">급식은 개학 이후 <b>학년별로 순차 재개</b>합니다. 11. 1.(화) 3학년 → 11. 2.(수) 2학년 → 11. 3.(목) 전 학년</div>
+<div class="note">급식은 <b>11. 1.(화)부터 전 학년</b> 정상 운영합니다. 개학일인 10. 31.(월)은 단축 수업으로 급식이 없습니다.</div>
 <h3 class="sub">주간 식단표 (10. 31. ~ 11. 4.)</h3>
 <div class="sx"><table class="tbl c meal-t"><thead><tr><th>월 10.31</th><th>화 11.1</th><th>수 11.2</th><th>목 11.3</th><th>금 11.4</th></tr></thead><tbody><tr>
 <td class="off">급식 없음<br><small>단축 수업</small></td>
