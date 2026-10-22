@@ -162,7 +162,7 @@ safe: {sec:"정보공개", t:"학교폭력예방", html:`
 <h3 class="sub">이런 것도 학교폭력입니다</h3>
 <ul class="bul"><li>단체 대화방에서 특정 학생을 빼거나 놀리는 일</li><li>허락 없이 사진·영상을 찍거나 퍼뜨리는 일, 그것으로 위협하는 일</li><li>물건을 빼앗거나 심부름을 강요하는 일</li><li>소문을 퍼뜨려 따돌리는 일</li></ul>
 <h3 class="sub">신고 후 처리 절차</h3>
-<ol class="flow"><li>신고 접수</li><li>사안 조사</li><li>학교장 자체 해결<br>심의위원회 요청</li><li>보호·선도 조치</li></ol>
+<ol class="flow"><li>신고 접수</li><li>사안 조사</li><li class="fork"><span>학교장 자체 해결</span><em>또는</em><span>심의위원회 요청</span></li><li>보호·선도 조치</li></ol>
 <div class="note">휴업 기간 중에 일어난 일도 신고할 수 있습니다. 신고한 학생의 신원은 비밀로 보호됩니다.</div>`},
 
 plan: {sec:"정보공개", t:"학교 교육계획", html:`
