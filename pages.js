@@ -106,21 +106,6 @@ curri: {sec:"학사안내", t:"교육과정", html:`
 </tbody></table></div>
 <div class="note">휴업 기간 동안 진행하지 못한 수업은 11월부터 보충 수업으로 운영합니다. 세부 과목별 평가 계획은 개학 후 각 교과 담당 교사가 안내합니다.</div>`},
 
-timetable: {sec:"학사안내", t:"시간표", html:`
-<p class="desc">개학 주간(10. 31. ~ 11. 4.)에는 전 학년 공통 단축 시간표로 운영합니다. 학급별 정규 시간표는 개학 후 담임 선생님께서 배부합니다.</p>
-<div class="sx"><table class="tbl c tt"><thead><tr><th>교시</th><th>시간</th><th>월 (10.31)</th><th>화 (11.1)</th><th>수 (11.2)</th><th>목 (11.3)</th><th>금 (11.4)</th></tr></thead><tbody>
-<tr class="hl"><td>등교</td><td>~ 08:00</td><td colspan="5">정문 검역 게이트 통과 후 각 학급 교실 입실</td></tr>
-<tr><td>조회</td><td>08:00 ~ 08:20</td><td>담임 조회</td><td>담임 조회</td><td>담임 조회</td><td>기념 조회</td><td>담임 조회</td></tr>
-<tr><td>1</td><td>08:30 ~ 09:15</td><td>안전 교육</td><td>국어</td><td>수학</td><td>영어</td><td>국어</td></tr>
-<tr><td>2</td><td>09:25 ~ 10:10</td><td>학급 활동</td><td>수학</td><td>영어</td><td>탐구</td><td>수학</td></tr>
-<tr><td>3</td><td>10:20 ~ 11:05</td><td>보건 교육</td><td>영어</td><td>탐구</td><td>국어</td><td>체육</td></tr>
-<tr><td>4</td><td>11:15 ~ 12:00</td><td>학급 정리</td><td>탐구</td><td>국어</td><td>수학</td><td>창체</td></tr>
-<tr><td>점심</td><td>12:00 ~ 12:50</td><td>—</td><td colspan="4">학년별 순차 급식</td></tr>
-<tr><td>5</td><td>12:50 ~ 13:35</td><td>—</td><td>창체</td><td>창체</td><td>진로</td><td>—</td></tr>
-<tr><td>하교</td><td></td><td>12:10</td><td>13:45</td><td>13:45</td><td>13:45</td><td>12:10</td></tr>
-</tbody></table></div>
-<p class="muted small">학년별 등교 시각은 담임 선생님 안내를 따릅니다.</p>`},
-
 meal: {sec:"학교생활", t:"급식 안내", html:`
 <div class="note">급식은 개학 이후 <b>학년별로 순차 재개</b>합니다. 11. 1.(화) 3학년 → 11. 2.(수) 2학년 → 11. 3.(목) 전 학년</div>
 <h3 class="sub">주간 식단표 (10. 31. ~ 11. 4.)</h3>
