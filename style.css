@@ -317,9 +317,8 @@ table.mcal td.big{background:var(--pri);color:#fff}table.mcal td.big span{color:
 .bul{padding-left:20px;margin:0}.bul li{list-style:disc;padding:3px 0}
 .flow{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
 .flow li{flex:1 1 140px;background:#f3f5f4;padding:12px;text-align:center;font-size:14px;position:relative;word-break:keep-all;display:flex;align-items:center;justify-content:center}
-.flow li.fork{background:none;padding:0;flex-direction:column;align-items:stretch;gap:4px}
+.flow li.fork{background:none;padding:0;flex-direction:column;align-items:stretch;gap:6px}
 .flow li.fork span{flex:1;display:flex;align-items:center;justify-content:center;background:#f3f5f4;padding:10px 12px}
-.flow li.fork em{font-style:normal;font-size:12px;font-weight:700;color:var(--pri);line-height:1.4}
 .num-l{margin:0;padding-left:18px}
 .smap{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
 .smap h4{margin:0 0 6px;background:var(--pri);color:#fff;padding:10px 12px;font-size:15px}
