@@ -1,0 +1,37 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css"><title>태화여자고등학교</title></head><body>
+<div id="hd"></div>
+<section class="sv-top"><div class="wrap"><h1 id="st"></h1></div></section>
+<div class="crumb"><div class="wrap" id="bc"></div></div>
+<div class="wrap sv" id="svw"><aside class="lnb" id="lnb"></aside><section class="pg"><h2 class="ttl" id="pt"></h2><div id="pb"></div></section></div>
+<div id="ft"></div>
+<script src="config.js"></script><script src="app.js"></script><script src="notices.js"></script><script src="pages.js"></script><script src="layout.js"></script>
+<script>
+const id=(location.hash||'#greet').slice(1); const {p,html}=renderPage(id);
+mount({sec:p.sec, active:p.t});
+document.title=p.t+' · 태화여자고등학교';
+document.getElementById('st').textContent=p.sec||p.t;
+document.getElementById('pt').textContent=p.t;
+document.getElementById('bc').innerHTML='<span>홈</span>'+(p.sec?'<span>›</span><span>'+p.sec+'</span>':'')+'<span>›</span><b>'+p.t+'</b>';
+if(!p.sec){ document.getElementById('lnb').remove(); document.getElementById('svw').classList.add('one'); }
+const pb=document.getElementById('pb'); pb.innerHTML=html;
+pb.querySelectorAll('[data-emblem]').forEach(e=>e.innerHTML=EMBLEM_L);
+if(id==='news'){
+  const box=document.getElementById('ncards'), v=document.getElementById('nview');
+  box.innerHTML=NEWS.map((n,i)=>'<a class="nc" href="#" data-i="'+i+'"><div class="ph"></div><div class="t">'+n.t+'<small>'+n.d+'</small></div></a>').join('');
+  box.addEventListener('click',e=>{const a=e.target.closest('[data-i]'); if(!a) return; e.preventDefault(); e.stopPropagation(); const n=NEWS[+a.dataset.i];
+    v.innerHTML='<div class="bv-head"><h3>'+n.t+'</h3><div class="bv-meta"><span><b>작성자</b>행정실</span><span><b>작성일</b>'+n.d+'</span></div></div><div class="bv-body">'+n.body.map(x=>'<p>'+x+'</p>').join('')+'</div><div class="btns"><button class="btn ghost" id="nb">목록</button></div>';
+    box.hidden=true; document.getElementById('nb').onclick=()=>{v.innerHTML='';box.hidden=false;}; window.scrollTo(0,0);},true);
+}
+if(id==='sitemap') document.getElementById('smap').innerHTML=MENUS.map(m=>'<div><h4>'+m.t+'</h4>'+m.items.map(i=>'<a href="'+i[1]+'">'+i[0]+'</a>').join('')+'</div>').join('');
+if(id==='search'){
+  let q=''; try{q=sessionStorage.getItem('thq')||'';}catch(e){}
+  const pool=NOTICES.map(n=>[n.t,n.link||('view.html#'+n.id),'공지사항',n.d]).concat(LETTERS.map(n=>[n.t,n.link||('view.html#'+n.id),'가정통신문',n.d]),
+    Object.entries(PAGES).filter(([k,x])=>x.sec).map(([k,x])=>[x.t,'page.html#'+k,x.sec,'']), NEWS.map(n=>[n.t,'page.html#news','학교 소식',n.d]));
+  const words=q.trim().split(/\s+/).filter(Boolean);
+  const hits=words.length?pool.filter(r=>words.some(w=>r[0].includes(w))):[];
+  document.getElementById('sres').innerHTML='<p class="desc">"<b>'+q.replace(/[<>&]/g,'')+'</b>" 검색 결과 <b>'+hits.length+'</b>건</p>'+
+    (hits.length?'<table class="list"><tbody>'+hits.map(r=>'<tr><td class="who">'+r[2]+'</td><td class="tl"><a href="'+r[1]+'">'+r[0]+'</a></td><td class="dt">'+r[3]+'</td></tr>').join('')+'</tbody></table>':'<div class="note">검색 결과가 없습니다. 다른 검색어로 다시 찾아보세요.</div>');
+}
+window.addEventListener('hashchange',()=>location.reload());
+</script>
+</body></html>

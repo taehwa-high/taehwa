@@ -1,7 +1,8 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Song+Myung&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><title>교무실 · 태화여자고등학교</title></head><body>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css"><title>교무실 · 태화여자고등학교</title></head><body>
 <header class="site"><div class="wrap"><a class="brand" href="index.html">태화여자고등학교<small>교무실 · 관리자 전용</small></a></div></header>
 <main><div class="wrap">
 <h1>회신서 관리</h1>
+<p class="muted" id="pv" hidden>미리보기입니다. 비밀번호는 1234이고, 접수 내용은 이 브라우저에만 저장됩니다.</p>
 <div id="login" class="card" style="max-width:420px">
 <form id="lf"><div class="field"><label class="t" for="pw">교무실 비밀번호</label><input type="password" id="pw" required></div><button class="btn dark">열기</button><div id="lout"></div></form>
 </div>
@@ -17,6 +18,7 @@
 <script src="config.js"></script><script src="app.js"></script>
 <script>
 const $ = id => document.getElementById(id);
+if(TH.PREVIEW) document.getElementById('pv').hidden = false;
 let pw = ""; try { pw = sessionStorage.getItem('th_pw') || ""; } catch(e){}
 let data = null;
 function fmt(t){ const d = new Date(t); return d.toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}); }

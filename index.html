@@ -1,12 +1,55 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Song+Myung&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><title>태화여자고등학교</title></head><body>
-<header class="site"><div class="wrap"><a class="brand" href="index.html">태화여자고등학교<small>TAEHWA GIRLS' HIGH SCHOOL</small></a>
-<nav class="site"><a href="index.html" class="on">학교소개</a><a href="notice.html" class="">공지사항</a><a href="letter.html" class="">가정통신문</a></nav></div></header>
-<div class="banner"><div class="wrap">📌 3학년 3반 · <a href="letter.html">개화 기념 등교 안내 및 참석 회신서</a> 접수 중</div></div>
-<main><div class="wrap">
-<section class="hero"><h1>개화 기념 등교</h1><p>3학년 3반 학생을 대상으로 8월 23일 등교를 안내드립니다.</p><a class="btn" href="letter.html">가정통신문 보기</a></section>
-<div class="grid">
-<section><h2>공지사항</h2><table class="list" id="recent"></table><p><a href="notice.html">전체 보기 →</a></p></section>
-<section><h2>학교 안내</h2><div class="card"><p>태화여자고등학교는 태화시에 있는 공립 여자 고등학교입니다. 개화 준비 기간(8.18~8.22) 동안 교직원 출입이 재개되었으며, 8월 23일 3학년 3반 학생을 대상으로 기념 등교가 진행됩니다.</p><p class="muted">모든 방문자는 정문 검역 게이트를 통과해야 합니다.</p></div></section>
-</div></div></main>
-<script src="notices.js"></script><script>document.getElementById('recent').innerHTML=NOTICES.slice(0,3).map(n=>`<tr><td><a href="${n.href}">${n.title}</a></td><td class="date">${n.date}</td></tr>`).join('')</script>
-<footer class="site"><div class="wrap">태화여자고등학교 · 태화시 · 교무실 대표 전화 연결이 원활하지 않을 수 있습니다.</div></footer></body></html>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css"><title>태화여자고등학교</title></head><body>
+<div id="hd"></div>
+<section class="visual" id="vis">
+<div class="slide on"><div class="wrap"><small>전교</small><h2>개학 안내</h2><p>10월 31일(월) 08:00 · 전교생 등교</p><a class="go" href="letter.html">가정통신문 보기</a></div></div>
+<div class="slide"><div class="wrap"><small>정문 안내</small><h2>정문 검역 게이트<br>이용 안내</h2><p>모든 방문자는 게이트를 통과한 뒤 출입할 수 있습니다.</p><a class="go" href="view.html#n1">자세히 보기</a></div></div>
+<div class="slide"><div class="wrap"><small>행정실</small><h2>개학 준비 기간<br>출입 안내</h2><p>10월 26일부터 30일까지 교직원은 출입 명부에 기록합니다.</p><a class="go" href="view.html#n2">자세히 보기</a></div></div>
+<div class="dots" id="dots"><i class="on"></i><i></i><i></i></div></section>
+<section class="quick"><div class="wrap"><a href="page.html#meal"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16a0 0 0 0 1 0 0 8 8 0 0 1-16 0z"/><path d="M8 7c0-1.5 1-1.5 1-3M12 7c0-1.5 1-1.5 1-3M16 7c0-1.5 1-1.5 1-3"/></svg></span>급식 안내</a><a href="#cal"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>학사일정</a><a href="letters.html"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg></span>가정통신문</a><a href="notice.html"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4h3l6 4V6L7 10z"/><path d="M17 9a4 4 0 0 1 0 6"/></svg></span>공지사항</a><a href="page.html#timetable"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg></span>시간표</a><a href="page.html#map"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.5 6-11a6 6 0 0 0-12 0c0 5.5 6 11 6 11z"/><circle cx="12" cy="10" r="2.2"/></svg></span>오시는 길</a></div></section>
+<div class="wrap"><div class="panels">
+<section class="panel"><div class="tabs"><button class="on" data-t="n">공지사항</button><button data-t="l">가정통신문</button></div><ul class="nlist" id="nl"></ul><p style="text-align:right;margin:10px 0 0"><a id="more" class="muted" href="notice.html">더보기 +</a></p></section>
+<section class="panel" id="cal"><h3>학사일정</h3><div class="cal"><div class="hd"><span>2033년 10월</span></div><table id="ct"></table>
+<div class="legend"><span><b style="color:#1f4e3d">10.26~10.30</b> 개학 준비 기간 (교직원 출입)</span><span><b style="color:#1f4e3d">10.31(월)</b> 전교 개학</span></div></div>
+<div class="meal"><h4>오늘의 급식</h4><p>급식은 개학 이후 학년별로 순차 재개합니다.</p></div></section>
+</div></div>
+<section class="news"><div class="wrap"><div class="panel"><h3>학교 소식 <a href="page.html#news">더보기 +</a></h3></div><div class="cards">
+<a class="nc" href="page.html#news"><div class="ph"></div><div class="t">정문 검역 게이트 설치 완료<small>2033.10.24</small></div></a>
+<a class="nc" href="page.html#news"><div class="ph"></div><div class="t">본관 현관 출입 명부 비치<small>2033.10.26</small></div></a>
+<a class="nc" href="page.html#news"><div class="ph"></div><div class="t">교정 환경 정비 실시<small>2033.10.27</small></div></a></div></div></section>
+<section class="greet" id="greet"><div class="wrap"><div class="em"></div><div><h3>학교장 인사말</h3><p>길고 어려운 시간을 지나 태화시에 다시 일상이 찾아왔습니다. 태화여자고등학교는 학생들이 안전하게 교실로 돌아올 수 있도록 개학을 준비하고 있습니다.</p><p>전교생이 함께 개학합니다. 학교를 지켜 주신 학부모님과 지역 주민께 감사드립니다.</p><p class="muted">태화여자고등학교장</p></div></div></section>
+<div id="ft"></div>
+<script src="config.js"></script><script src="app.js"></script><script src="notices.js"></script><script src="layout.js"></script>
+<script>mount({sec:"학교소개"});
+document.querySelector('.greet .em').innerHTML = EMBLEM_L;
+const slides=[...document.querySelectorAll('.slide')], dots=[...document.querySelectorAll('#dots i')]; let si=0, st;
+function show(i){ si=(i+slides.length)%slides.length; slides.forEach((s,k)=>s.classList.toggle('on',k===si)); dots.forEach((d,k)=>d.classList.toggle('on',k===si)); }
+function auto(){ clearInterval(st); st=setInterval(()=>show(si+1),5500); }
+dots.forEach((d,k)=>d.addEventListener('click',()=>{show(k);auto();})); auto();
+function list(kind){ const arr = kind==='n' ? NOTICES : LETTERS;
+  document.getElementById('nl').innerHTML = arr.slice(0,5).map(n=>'<li><a href="'+(n.link||('view.html#'+n.id))+'">'+n.t+(n.id==='l1'?'<span class="new">N</span>':'')+'</a><span class="d">'+n.d.slice(5)+'</span></li>').join('');
+  document.getElementById('more').href = kind==='n' ? 'notice.html' : 'letters.html'; }
+document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b)); list(b.dataset.t);}));
+list('n');
+(function(){ const first=new Date(2033,9,1).getDay(), days=31; let h='<tr>'+['일','월','화','수','목','금','토'].map(d=>'<th>'+d+'</th>').join('')+'</tr><tr>'; let c=0;
+  for(let i=0;i<first;i++){h+='<td></td>';c++}
+  for(let d=1;d<=days;d++){ const w=c%7; let cl=w===0?'sun':w===6?'sat':''; if(d>=26&&d<=31) cl+=' ev'; if(d===28) cl+=' today'; h+='<td class="'+cl+'">'+d+'</td>'; c++; if(c%7===0&&d<days) h+='</tr><tr>'; }
+  while(c%7){h+='<td></td>';c++} document.getElementById('ct').innerHTML=h+'</tr>'; })();
+// 접속하자마자 뜨는 가정통신문 팝업 (오늘 하루 보지 않기)
+(function(){
+  const KEY='th_popup_hide'; let hide=false;
+  try{ hide = localStorage.getItem(KEY) === new Date().toDateString(); }catch(e){}
+  if(hide) return;
+  const m=document.createElement('div'); m.className='lp'; m.setAttribute('role','dialog'); m.setAttribute('aria-label','가정통신문 안내');
+  m.innerHTML='<div class="lp-box"><div class="lp-top"><span>가정통신문</span><small>제2033-31호 · 2033. 10. 28.</small></div>'+
+    '<div class="lp-body">'+EMBLEM+'<div class="lp-txt"><h4>[전교] 개학 안내 및 참석 회신서 제출</h4>'+
+    '<p>10월 31일(월) 08:00 전교생 등교</p><p class="s">전교생은 가정통신문을 확인한 뒤<br>회신서를 제출해 주시기 바랍니다.</p></div>'+
+    '<a class="btn" href="letter.html">가정통신문 보기</a></div>'+
+    '<div class="lp-ft"><label><input type="checkbox" id="lp-chk"> 오늘 하루 보지 않기</label><button type="button" id="lp-x">닫기 ✕</button></div></div>';
+  document.body.appendChild(m);
+  const close=()=>{ try{ if(document.getElementById('lp-chk').checked) localStorage.setItem(KEY,new Date().toDateString()); }catch(e){} m.remove(); };
+  m.querySelector('#lp-x').onclick=close;
+  m.addEventListener('click',e=>{ if(e.target===m) close(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+})();
+</script>
+</body></html>
