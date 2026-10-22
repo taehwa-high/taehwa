@@ -46,13 +46,14 @@ function openOffice(){
       '<input type="password" id="pwm-in" aria-label="암호" autocomplete="off"><div class="pwm-err" id="pwm-err" role="alert"></div>' +
       '<div class="pwm-btns"><button type="button" class="btn ghost" id="pwm-x">취소</button><button class="btn" id="pwm-ok">확인</button></div></form>';
     document.body.appendChild(m);
+    engOnly(m.querySelector('#pwm-in'));
     const close = () => { m.classList.remove('on'); };
     m.addEventListener('click', e => { if(e.target === m) close(); });
     document.addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
     m.querySelector('#pwm-x').onclick = close;
     m.querySelector('form').addEventListener('submit', async e => {
       e.preventDefault();
-      const pw = m.querySelector('#pwm-in').value, err = m.querySelector('#pwm-err'), ok = m.querySelector('#pwm-ok');
+      const pw = toEng(m.querySelector('#pwm-in').value), err = m.querySelector('#pwm-err'), ok = m.querySelector('#pwm-ok');
       if(!pw){ err.textContent = '암호를 입력하세요.'; return; }
       ok.disabled = true; err.textContent = '';
       try{
