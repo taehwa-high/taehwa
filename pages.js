@@ -130,6 +130,18 @@ after: {sec:"학교생활", t:"방과후학교", html:`
 </tbody></table></div>
 <p class="muted small">'생명과학 실험 탐구'는 과학실 정비 일정으로 이번 학기 폐강합니다. 문의: 방과후학교 담당 (본관 2층 교무실)</p>`},
 
+club: {sec:"학교생활", t:"동아리", html:`
+<p class="desc">태화여자고등학교에는 5개 분과, 23개의 학생 자율 동아리가 있습니다. 동아리 연합회가 분과별 활동과 축제·발표회를 함께 운영합니다.</p>
+<div class="note">휴업 기간 동안 멈췄던 동아리 활동은 <b>11. 21.(월)</b> 방과후학교 개강과 함께 다시 시작합니다. 신입 부원 모집은 재개 후 2주 동안 각 동아리에서 받습니다.</div>
+<h3 class="sub">동아리 연합회</h3>
+<div class="org"><div class="bx top"><b>회장</b>2학년</div><i class="ln"></i><div class="row"><div class="bx"><b>부회장</b>2학년</div><div class="bx"><b>부회장</b>1학년</div></div><i class="ln"></i><div class="row"><div class="bx"><b>학술 분과</b>분과장</div><div class="bx"><b>공연 분과</b>분과장</div><div class="bx"><b>봉사 분과</b>분과장</div><div class="bx"><b>언론·토론 분과</b>분과장</div><div class="bx"><b>예술·체육 분과</b>분과장</div></div></div>
+<h3 class="sub">동아리 목록</h3>
+<div class="club"><div class="ph"><b>학술</b><span>5개 동아리</span></div><table class="tbl"><thead><tr><th>동아리명</th><th>동아리 소개</th></tr></thead><tbody><tr><td class="cn">별헤는밤</td><td>천체 관측과 천문학 기초 탐구, 학기마다 교정 관측회 개최</td></tr><tr><td class="cn">PHILO</td><td>인문 고전을 함께 읽고 철학적 질문으로 토론</td></tr><tr><td class="cn">셜록</td><td>법·범죄심리 사례를 분석하고 모의 수사 보고서 작성</td></tr><tr><td class="cn">BIOS</td><td>생명과학 실험을 직접 설계하고 탐구 보고서로 정리</td></tr><tr><td class="cn">CODE:TH</td><td>파이썬·웹 프로그래밍으로 학교생활에 필요한 도구 제작</td></tr></tbody></table></div>
+<div class="club"><div class="ph"><b>공연</b><span>5개 동아리</span></div><table class="tbl"><thead><tr><th>동아리명</th><th>동아리 소개</th></tr></thead><tbody><tr><td class="cn">태화합창단</td><td>교가 합창과 정기 연주회, 입학식·졸업식 공연</td></tr><tr><td class="cn">울림</td><td>사물놀이와 국악 타악 공연</td></tr><tr><td class="cn">하모니아</td><td>현악·관악 앙상블, 축제 무대 공연</td></tr><tr><td class="cn">막올림</td><td>연극 동아리, 매년 가을 정기 공연</td></tr><tr><td class="cn">STEP</td><td>방송 댄스·창작 안무, 축제 공연</td></tr></tbody></table></div>
+<div class="club"><div class="ph"><b>봉사</b><span>4개 동아리</span></div><table class="tbl"><thead><tr><th>동아리명</th><th>동아리 소개</th></tr></thead><tbody><tr><td class="cn">햇살</td><td>지역 아동센터 학습 멘토링</td></tr><tr><td class="cn">RCY</td><td>청소년적십자, 응급처치 교육과 헌혈 캠페인</td></tr><tr><td class="cn">초록발자국</td><td>교정·하천 환경 정화와 분리배출 캠페인</td></tr><tr><td class="cn">손말</td><td>수어를 배우고 장애 인식 개선 활동</td></tr></tbody></table></div>
+<div class="club"><div class="ph"><b>언론·토론</b><span>4개 동아리</span></div><table class="tbl"><thead><tr><th>동아리명</th><th>동아리 소개</th></tr></thead><tbody><tr><td class="cn">태화신문</td><td>학교 신문 발행, 교내 소식 취재와 인터뷰</td></tr><tr><td class="cn">TBS</td><td>교내 방송 송출과 행사 진행</td></tr><tr><td class="cn">논객</td><td>시사 쟁점 디베이트, 교내 토론대회 운영</td></tr><tr><td class="cn">TMUN</td><td>모의유엔 영어 토론과 결의안 작성</td></tr></tbody></table></div>
+<div class="club"><div class="ph"><b>예술·체육</b><span>5개 동아리</span></div><table class="tbl"><thead><tr><th>동아리명</th><th>동아리 소개</th></tr></thead><tbody><tr><td class="cn">화담</td><td>회화·드로잉, 학기말 교내 전시회</td></tr><tr><td class="cn">글샘</td><td>시·소설 창작과 문집 발간</td></tr><tr><td class="cn">찰칵</td><td>사진으로 교정과 학교 행사 기록</td></tr><tr><td class="cn">셔틀</td><td>배드민턴, 교내 리그전 운영</td></tr><tr><td class="cn">피구왕</td><td>피구·발야구 등 단체 구기 활동</td></tr></tbody></table></div>`},
+
 health: {sec:"학교생활", t:"보건실", html:`
 <table class="tbl"><tbody>
 <tr><th>위치</th><td>본관 1층 중앙 현관 왼쪽</td></tr>

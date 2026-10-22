@@ -363,3 +363,27 @@ footer.ft .in img.emb{width:56px;height:56px;flex:none}
 .lp-ft{display:flex;justify-content:space-between;align-items:center;background:#2b2b2b;color:#ddd;padding:9px 14px;font-size:13px}
 .lp-ft label{display:flex;gap:6px;align-items:center;cursor:pointer}
 .lp-ft button{background:none;border:0;color:#fff;font:inherit;cursor:pointer}
+
+/* ── 동아리 ── */
+.org{display:flex;flex-direction:column;align-items:center;margin:0 0 10px}
+.org .row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;border-top:2px solid var(--line);padding-top:14px}
+.org .ln{display:block;width:2px;height:16px;background:var(--line)}
+.org .bx{min-width:120px;border:1px solid var(--line);background:#fff;padding:10px 14px;text-align:center;font-size:13.5px;color:#666;line-height:1.5}
+.org .bx b{display:block;font-size:15px;color:var(--pri)}
+.org .bx.top{background:var(--pri);border-color:var(--pri);color:#dfe9e4}.org .bx.top b{color:#fff}
+.club{display:grid;grid-template-columns:170px 1fr;margin:0 0 22px;border-top:2px solid var(--pri)}
+.club .ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#fff;padding:20px 12px;text-align:center}
+.club .ph b{font-family:var(--serif);font-size:24px;font-weight:500;word-break:keep-all}
+.club .ph span{font-size:13px;opacity:.85}
+.club:nth-of-type(5n+1) .ph{background:linear-gradient(135deg,#4a6b5c,#2f4a3f)}
+.club:nth-of-type(5n+2) .ph{background:linear-gradient(135deg,#8a7a4a,#5a4d28)}
+.club:nth-of-type(5n+3) .ph{background:linear-gradient(135deg,#5d7480,#38505c)}
+.club:nth-of-type(5n+4) .ph{background:linear-gradient(135deg,#6b6a63,#3f3f3a)}
+.club:nth-of-type(5n) .ph{background:linear-gradient(135deg,#7a5a5a,#4d3434)}
+.club table.tbl{border-top:0;margin:0}
+.club table.tbl td.cn{width:130px;font-weight:700;color:var(--pri);white-space:nowrap}
+@media (max-width:760px){
+  .club{grid-template-columns:1fr}.club .ph{flex-direction:row;gap:10px;padding:12px}.club .ph b{font-size:19px}
+  .club table.tbl td.cn{width:96px}
+  .org .bx{min-width:0;flex:1 1 40%}
+}
