@@ -314,7 +314,7 @@ table.mcal td.big{background:var(--pri);color:#fff}table.mcal td.big span{color:
 .cta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:10px}
 .cta div{border:1px solid var(--line);padding:18px;text-align:center}
 .cta b{display:block;font-size:24px;color:var(--pri)}.cta span{font-size:13.5px;color:#666}
-.dots{padding-left:20px;margin:0}.dots li{list-style:disc;padding:3px 0}
+.bul{padding-left:20px;margin:0}.bul li{list-style:disc;padding:3px 0}
 .flow{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
 .flow li{flex:1 1 140px;background:#f3f5f4;padding:12px;text-align:center;font-size:14px;position:relative}
 .num-l{margin:0;padding-left:18px}
