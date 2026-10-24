@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261025d"><title>개학 안내 · 태화여자고등학교</title></head><body>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261025e"><title>개학 안내 · 태화여자고등학교</title></head><body>
 <div id="hd"></div>
 <section class="sv-top"><div class="wrap"><h1>알림마당</h1></div></section>
 <div class="crumb"><div class="wrap"><span>홈</span><span>›</span><span>알림마당</span><span>›</span><span>가정통신문</span><span>›</span><b>개학 안내</b></div></div>
@@ -45,7 +45,7 @@
 <form id="f">
 <table class="rp-form">
 <tr><th><label for="nick">성 명</label></th><td><input type="text" id="nick" maxlength="20" autocomplete="off" placeholder="밴드 닉네임" required></td></tr>
-<tr><th>참석 일시</th><td><div class="checks" id="dates"></div></td></tr>
+<tr><th>참석 일시</th><td><input type="datetime-local" id="when-at" class="dt-in" aria-label="참석 일시"></td></tr>
 <tr><th>보호자 확인</th><td><div class="checks"><label><input type="checkbox" id="agree"> <span>진행 중 범인 외에는 거짓말을 하지 않으며, 답하기 싫은 질문은 거부할 수 있음을 확인합니다. 진행 중 알게 된 내용은 외부에 공유하지 않습니다.</span></label></div></td></tr>
 </table>
 <p class="rp-say">위와 같이 개학 참석을 회신합니다.</p>
@@ -59,11 +59,13 @@
 <div class="bv-nav"><div><b>이전글</b><span class="muted">이전글이 없습니다.</span></div><div><b>다음글</b><a href="view.html#l2">2학기 방과후학교 수강 신청 안내</a></div></div>
 <div class="btns"><a class="btn" href="letters.html">목록</a></div></section></div>
 <div id="ft"></div>
-<script src="config.js?v=20261025d"></script><script src="app.js?v=20261025d"></script><script src="notices.js?v=20261025d"></script><script src="layout.js?v=20261025d"></script>
+<script src="config.js?v=20261025e"></script><script src="app.js?v=20261025e"></script><script src="notices.js?v=20261025e"></script><script src="layout.js?v=20261025e"></script>
 <script>mount({sec:"알림마당",active:"가정통신문"});
 const $ = id => document.getElementById(id);
 $('lt-em').innerHTML = EMBLEM;
-$('dates').innerHTML = TH.CANDIDATE_DATES.map((d,i)=>`<label><input type="checkbox" name="d" value="${esc(d)}"> <span>${esc(d)}</span></label>`).join('');
+// 참석 일시: 달력에서 무엇을 골라도 정해진 일시로 바뀐다
+const AT = $('when-at'), snap = () => { if(AT.value && AT.value !== TH.ATTEND_AT) AT.value = TH.ATTEND_AT; };
+AT.addEventListener('change', snap); AT.addEventListener('blur', snap);
 let state = {remaining:0, open:false};
 // 제출 시작 시각 (config.js 의 OPEN_AT, 한국 시간 기준이라 기기 시간대와 무관)
 const OPEN_AT = TH.OPEN_AT ? new Date(TH.OPEN_AT + ":00+09:00") : null;
@@ -72,13 +74,13 @@ const isOpen = () => !OPEN_AT || Date.now() >= OPEN_AT.getTime();
 const OPEN_MSG = OPEN_AT ? new Date(OPEN_AT.getTime() + 9*3600e3).toISOString().slice(11,16) + "부터 제출 가능합니다." : "";
 function render(){ $('submit').disabled = false; }
 async function refresh(){ render(); }
-const ERR = {nickname:"닉네임을 1~20자로 적어 주세요.", dates:"참석 일시에 체크해 주세요.", full:"자리가 모두 찼습니다.", closed:"접수가 마감되었습니다.", duplicate:"이미 같은 이름으로 제출된 회신서가 있습니다.", notyet:OPEN_MSG || "아직 제출할 수 없습니다."};
+const ERR = {nickname:"닉네임을 1~20자로 적어 주세요.", dates:"참석 일시를 선택해 주세요.", full:"자리가 모두 찼습니다.", closed:"접수가 마감되었습니다.", duplicate:"이미 같은 이름으로 제출된 회신서가 있습니다.", notyet:OPEN_MSG || "아직 제출할 수 없습니다."};
 $('f').addEventListener('submit', async ev => {
   ev.preventDefault();
   if(!isOpen()) { toast(OPEN_MSG); return; }
   const out = $('out'); out.innerHTML = "";
   const nick = $('nick').value.trim();
-  const dates = [...document.querySelectorAll('input[name=d]:checked')].map(x=>x.value);
+  snap(); const dates = AT.value ? [TH.CANDIDATE_DATES[0]] : [];
   if(!nick) { out.innerHTML = `<div class="msg err">${ERR.nickname}</div>`; return; }
   if(!dates.length) { out.innerHTML = `<div class="msg err">${ERR.dates}</div>`; return; }
   if(!$('agree').checked) { out.innerHTML = `<div class="msg err">보호자 확인란에 체크해 주세요.</div>`; return; }
@@ -87,7 +89,7 @@ $('f').addEventListener('submit', async ev => {
     const r = await rpc('submit_reply', {p_nickname: nick, p_dates: dates});
     if(!r.ok){ out.innerHTML = `<div class="msg err">${ERR[r.error] || "제출하지 못했습니다."}</div>`; await refresh(); return; }
     state.remaining = r.remaining;
-    $('f').outerHTML = `<div class="done"><p>회신서가 접수되었습니다.</p><p>${slotText(r.remaining)}</p></div>`;
+    $('f').outerHTML = `<div class="done"><p>회신서가 접수되었습니다.</p><p>참석 일시: ${esc(dates[0])}</p><p>${slotText(r.remaining)}</p></div>`;
   } catch(e){ out.innerHTML = `<div class="msg err">제출 중 문제가 생겼습니다. 잠시 뒤 다시 시도해 주세요.</div>`; $('submit').disabled = false; }
 });
 refresh();

@@ -206,7 +206,7 @@ footer.ft p{margin:0 0 3px}
 .rp-form{width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.6}
 .rp-form th,.rp-form td{border:1px solid #888;padding:8px 12px;vertical-align:middle;text-align:left}
 .rp-form th{width:96px;background:#f3f2ee;font-weight:500;text-align:center;white-space:nowrap}
-.rp-form input[type=text]{width:100%;padding:8px 10px;border:1px solid #bdbab0;background:#fff;font:inherit}
+.rp-form input[type=text],.rp-form input.dt-in{width:100%;padding:8px 10px;border:1px solid #bdbab0;background:#fff;font:inherit}
 .rp-form .checks label{border:0;margin:0;padding:2px 0;background:none}
 .rp-say{text-align:center;margin:20px 0 4px}
 .rp-date{text-align:center;margin:0 0 4px;letter-spacing:.1em}
