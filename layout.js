@@ -81,26 +81,14 @@ function mount(opts){
     const q = f.querySelector('input').value.trim(), byWho = f.querySelector('select') && f.querySelector('select').selectedIndex === 1; let n = 0;
     document.querySelectorAll('table.list tbody tr').forEach(tr => { const c = tr.querySelector(byWho ? '.who' : '.tl'); const ok = !q || (c && c.textContent.includes(q)); tr.hidden = !ok; if(ok) n++; });
     if(q && !n) toast('검색 결과가 없습니다.'); }));
-  // 모바일: 상단 메뉴에 손가락을 대면 PC의 호버처럼 서브 메뉴가 열린다.
-  // 그대로 끌어 서브 메뉴 위에서 떼면 그 페이지로 가고, 떼고 나서 서브 메뉴를 눌러도 된다.
-  const narrow = window.matchMedia('(max-width:820px)'), gnb = document.querySelector('.gnb');
+  // 모바일: 상단 메뉴를 누르면 이동하지 않고 서브 메뉴를 펼친다. 서브 메뉴를 한 번 더 눌러 이동 (같은 메뉴를 다시 누르면 닫힘)
+  const narrow = window.matchMedia('(max-width:820px)');
   const closeAll = () => document.querySelectorAll('.gnb .m.open').forEach(x => x.classList.remove('open'));
-  let hot = null;
-  const setHot = el => { if(hot === el) return; if(hot) hot.classList.remove('hot'); hot = el; if(hot) hot.classList.add('hot'); };
-  if(gnb){
-    gnb.addEventListener('touchstart', e => {
-      if(!narrow.matches) return; const a = e.target.closest('.m>a'); if(!a) return;
-      if(!a.parentElement.classList.contains('open')){ closeAll(); a.parentElement.classList.add('open'); }
-    }, {passive:true});
-    gnb.addEventListener('touchmove', e => {
-      if(!narrow.matches || !e.target.closest('.m>a')) return;
-      e.preventDefault();   // 메뉴에서 시작한 손가락은 화면을 스크롤하지 않고 서브 메뉴를 고른다
-      const t = e.touches[0], el = document.elementFromPoint(t.clientX, t.clientY);   // 끄는 중에는 다른 메뉴로 바꾸지 않는다 (두 줄 메뉴를 지나갈 때)
-      setHot(el && el.closest('.gnb .m.open .sub a'));
-    }, {passive:false});
-    gnb.addEventListener('touchend', () => { if(hot){ const h = hot.href; setHot(null); location.href = h; } });
-    gnb.querySelectorAll('.m>a').forEach(a => a.addEventListener('click', e => { if(narrow.matches) e.preventDefault(); }));
-  }
+  document.querySelectorAll('.gnb .m>a').forEach(a => a.addEventListener('click', e => {
+    if(!narrow.matches) return;
+    e.preventDefault(); const m = a.parentElement, open = !m.classList.contains('open');
+    closeAll(); m.classList.toggle('open', open);
+  }));
   document.addEventListener('click', e => { if(!e.target.closest('.gnb')) closeAll(); });
   const gs = document.getElementById('gsearch');
   if(gs) gs.addEventListener('submit', e => { e.preventDefault(); const q = gs.querySelector('input').value.trim();
