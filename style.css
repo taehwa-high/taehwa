@@ -206,7 +206,7 @@ footer.ft p{margin:0 0 3px}
 .rp-form{width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.6}
 .rp-form th,.rp-form td{border:1px solid #888;padding:8px 12px;vertical-align:middle;text-align:left}
 .rp-form th{width:96px;background:#f3f2ee;font-weight:500;text-align:center;white-space:nowrap}
-.rp-form input[type=text],.rp-form input.dt-in{width:100%;padding:8px 10px;border:1px solid #bdbab0;background:#fff;font:inherit}
+.rp-form input[type=text]{width:100%;padding:8px 10px;border:1px solid #bdbab0;background:#fff;font:inherit}
 .rp-form .checks label{border:0;margin:0;padding:2px 0;background:none}
 .rp-say{text-align:center;margin:20px 0 4px}
 .rp-date{text-align:center;margin:0 0 4px;letter-spacing:.1em}
@@ -387,3 +387,20 @@ footer.ft .in img.emb{width:56px;height:56px;flex:none}
   .club table.tbl td.cn{width:96px}
   .org .bx{min-width:0;flex:1 1 40%}
 }
+/* 회신서 참석 일시 달력 */
+.dp{position:relative}
+.rp-form input.dt-in{cursor:pointer}
+.dp-pop{position:absolute;z-index:20;top:calc(100% + 4px);left:0;width:280px;max-width:calc(100vw - 48px);background:#fff;border:1px solid #888;box-shadow:0 6px 18px rgba(0,0,0,.15);padding:10px 12px}
+.dp-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.dp-hd button{border:0;background:none;font-size:22px;line-height:1;padding:2px 10px;cursor:pointer;color:var(--pri)}
+.rp-form .dp-pop table{width:100%;border-collapse:collapse;font-size:13px}
+.rp-form .dp-pop th,.rp-form .dp-pop td{border:0;padding:1px;width:auto;background:none;text-align:center;font-weight:500}
+.rp-form .dp-pop th{color:#777;padding:4px 0}
+.dp-pop td button{width:100%;aspect-ratio:1;border:0;border-radius:50%;background:none;font:inherit;cursor:pointer}
+.dp-pop td button:hover{background:var(--pri-l)}
+.dp-pop td button.on{background:var(--pri);color:#fff}
+.dp-ft{display:flex;gap:8px;margin-top:8px}
+.dp-ft input{flex:1;min-width:0;padding:6px 8px;border:1px solid #bdbab0;font:inherit}
+.dp-err{margin:6px 0 0;font-size:13px;color:var(--stamp)}
+.dp-err:empty{display:none}
+@media (max-width:600px){.dp-pop{left:auto;right:0}}

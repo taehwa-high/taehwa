@@ -2,8 +2,8 @@
 window.TH = {
   SUPABASE_URL: "https://uqxsqolcidnypqnxmcwo.supabase.co",
   SUPABASE_KEY: "sb_publishable_AxXOh5W_XIvEu6QjUbQyOQ_Ph4FLcse",   // anon public 키만 넣는다. service_role 키는 절대 넣지 않는다.
-  // 회신서의 '참석 일시' 달력. 어느 날짜·시각을 골라도 ATTEND_AT 으로 바뀌고, 저장되는 글은 CANDIDATE_DATES 의 첫 항목이다.
-  ATTEND_AT: "2026-10-31T22:30",
+  // 회신서의 '참석 일시' 달력. CAL_MONTH 달로 열리고, 어느 날짜·시각을 골라도 CANDIDATE_DATES 의 첫 항목으로 적힌다.
+  CAL_MONTH: "2033-10",
   CANDIDATE_DATES: ["2026년 10월 31일(토) 22:30"],
   // 회신서 제출을 받기 시작하는 시각 (한국 시간). 바꿀 때는 Supabase settings 표의 open_at 도 같이 바꾼다. 바로 받으려면 "" 로 둔다.
   OPEN_AT: "2026-10-25T21:00"
