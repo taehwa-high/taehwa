@@ -2,7 +2,7 @@
 const MENUS = [
   {t:"학교소개", href:"page.html#greet", items:[["학교장 인사말","page.html#greet"],["학교 연혁","page.html#history"],["교가·교표","page.html#symbol"],["오시는 길","page.html#map"]]},
   {t:"학사안내", href:"page.html#cal", items:[["학사일정","page.html#cal"]]},
-  {t:"학교생활", href:"page.html#meal", items:[["급식 안내","page.html#meal"],["방과후학교","page.html#after"],["동아리","page.html#club"],["보건실","page.html#health"]]},
+  {t:"학교생활", href:"page.html#meal", items:[["급식 안내","page.html#meal"],["방과후학교","page.html#after"],["동아리","page.html#club"],["보건·방역 안내","page.html#health"]]},
   {t:"알림마당", href:"notice.html", items:[["공지사항","notice.html"],["가정통신문","letters.html"],["학교 소식","page.html#news"]]},
   {t:"정보공개", href:"page.html#council", items:[["학교운영위원회","page.html#council"],["학교폭력예방","page.html#safe"],["학교 교육계획","page.html#plan"]]}
 ];

@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261025b"><title>개학 안내 · 태화여자고등학교</title></head><body>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261025c"><title>개학 안내 · 태화여자고등학교</title></head><body>
 <div id="hd"></div>
 <section class="sv-top"><div class="wrap"><h1>알림마당</h1></div></section>
 <div class="crumb"><div class="wrap"><span>홈</span><span>›</span><span>알림마당</span><span>›</span><span>가정통신문</span><span>›</span><b>개학 안내</b></div></div>
@@ -11,7 +11,7 @@
 <div class="lt-no"><span>제 2033-31호</span><span>2033. 10. 28.(금)</span></div>
 </header>
 <table class="lt-meta">
-<tr><th>수 신</th><td>전교 학부모님 (학생 본인 포함)</td></tr>
+<tr><th>수 신</th><td>전교생</td></tr>
 <tr><th>발 신</th><td>교무부</td></tr>
 <tr><th>제 목</th><td><b>[전교] 개학 안내 및 참석 회신서 제출</b></td></tr>
 </table>
@@ -24,7 +24,6 @@
 <tr><th>가. 일 시</th><td>2033년 10월 31일(월) 08:00 등교</td></tr>
 <tr><th>나. 대 상</th><td>전교생</td></tr>
 <tr><th>다. 장 소</th><td>각 학급 교실</td></tr>
-<tr><th>라. 준비물</th><td>교복, 명찰, 필기구</td></tr>
 </table>
 <p>4. 유의 사항</p>
 <ol class="lt-ol">
@@ -33,7 +32,6 @@
 <li>교내 통신이 원활하지 않을 수 있으니, 가정과의 연락은 등교 전에 마쳐 주십시오.</li>
 <li>학교에서 오간 이야기는 학교 밖에서 함부로 옮기지 않도록 지도해 주십시오.</li>
 </ol>
-<p>5. 그날 아침, 교실에서 학생 모두를 기다리겠습니다.</p>
 <p class="att">붙임&nbsp;&nbsp;개학 참석 회신서 1부.&nbsp;&nbsp;끝.</p>
 </div>
 <div class="lt-sign"><span>태화여자고등학교장</span><span class="seal">직인<br>생략</span></div>
@@ -53,7 +51,6 @@
 <p class="rp-say">위와 같이 개학 참석을 회신합니다.</p>
 <p class="rp-date">2033년 &nbsp;10월 &nbsp;&nbsp;&nbsp;일</p>
 <p class="rp-to">태화여자고등학교장 귀하</p>
-<p class="msg" id="when" hidden></p>
 <div class="rp-btn"><button class="btn dark" id="submit" type="submit" disabled>회신서 제출</button></div>
 <div id="out"></div>
 </form>
@@ -62,7 +59,7 @@
 <div class="bv-nav"><div><b>이전글</b><span class="muted">이전글이 없습니다.</span></div><div><b>다음글</b><a href="view.html#l2">2학기 방과후학교 수강 신청 안내</a></div></div>
 <div class="btns"><a class="btn" href="letters.html">목록</a></div></section></div>
 <div id="ft"></div>
-<script src="config.js?v=20261025b"></script><script src="app.js?v=20261025b"></script><script src="notices.js?v=20261025b"></script><script src="layout.js?v=20261025b"></script>
+<script src="config.js?v=20261025c"></script><script src="app.js?v=20261025c"></script><script src="notices.js?v=20261025c"></script><script src="layout.js?v=20261025c"></script>
 <script>mount({sec:"알림마당",active:"가정통신문"});
 const $ = id => document.getElementById(id);
 $('lt-em').innerHTML = EMBLEM;
@@ -71,20 +68,19 @@ let state = {remaining:0, open:false};
 // 제출 시작 시각 (config.js 의 OPEN_AT, 한국 시간 기준이라 기기 시간대와 무관)
 const OPEN_AT = TH.OPEN_AT ? new Date(TH.OPEN_AT + ":00+09:00") : null;
 const isOpen = () => !OPEN_AT || Date.now() >= OPEN_AT.getTime();
-if(OPEN_AT){ const k = new Date(OPEN_AT.getTime() + 9*3600e3), h = k.getUTCHours(), m = k.getUTCMinutes();
-  $('when').textContent = `${k.getUTCMonth()+1}월 ${k.getUTCDate()}일(${"일월화수목금토"[k.getUTCDay()]}) ${h<12?"오전":"오후"} ${h%12||12}시${m?" "+m+"분":""}부터 제출할 수 있습니다.`; }
-function render(){ const open = isOpen(); $('when').hidden = open; $('submit').disabled = !open; }
-const tick = setInterval(() => { if(isOpen()){ clearInterval(tick); render(); } }, 1000);
+// 열리기 전에 제출을 누르면 알림으로 시각만 보여 준다 (예: 21:00부터 제출 가능합니다.)
+const OPEN_MSG = OPEN_AT ? new Date(OPEN_AT.getTime() + 9*3600e3).toISOString().slice(11,16) + "부터 제출 가능합니다." : "";
+function render(){ $('submit').disabled = false; }
 async function refresh(){ render(); }
 const ERR = {nickname:"닉네임을 1~20자로 적어 주세요.", dates:"참석 일시에 체크해 주세요.", full:"자리가 모두 찼습니다.", closed:"접수가 마감되었습니다.", duplicate:"이미 같은 이름으로 제출된 회신서가 있습니다."};
 $('f').addEventListener('submit', async ev => {
   ev.preventDefault();
+  if(!isOpen()) { toast(OPEN_MSG); return; }
   const out = $('out'); out.innerHTML = "";
   const nick = $('nick').value.trim();
   const dates = [...document.querySelectorAll('input[name=d]:checked')].map(x=>x.value);
   if(!nick) { out.innerHTML = `<div class="msg err">${ERR.nickname}</div>`; return; }
   if(!dates.length) { out.innerHTML = `<div class="msg err">${ERR.dates}</div>`; return; }
-  if(!isOpen()) { render(); return; }
   if(!$('agree').checked) { out.innerHTML = `<div class="msg err">보호자 확인란에 체크해 주세요.</div>`; return; }
   $('submit').disabled = true;
   try {

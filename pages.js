@@ -16,7 +16,7 @@ greet: {sec:"학교소개", t:"학교장 인사말", html:`
 <div class="greet-pg"><div class="gp-em" data-emblem></div><div>
 <p class="lead">"다시, 교실로."</p>
 <p>길고 어려운 시간을 지나 태화시에 다시 일상이 찾아왔습니다. 그동안 학교를 지켜 주신 학부모님과 지역 주민 여러분께 깊이 감사드립니다.</p>
-<p>태화여자고등학교는 1971년 개교 이래 '참되고, 바르고, 아름다운 사람'을 길러 온 학교입니다. 올해 봄, 우리는 예상하지 못한 일로 교문을 닫아야 했고, 학생들은 각자의 자리에서 그 시간을 견뎌 냈습니다.</p>
+<p>태화여자고등학교는 1971년 개교 이래 '참되고, 바르고, 아름다운 사람'을 길러 온 학교입니다. 올해 여름, 우리는 예상하지 못한 일로 교문을 닫아야 했고, 학생들은 각자의 자리에서 그 시간을 견뎌 냈습니다.</p>
 <p>이제 교직원 모두가 학생들이 안전하게 돌아올 수 있도록 교실을 정비하고 있습니다. 정문에는 검역 게이트를 새로 설치하였고, 본관 현관에는 출입 명부를 비치하였습니다. 처음 며칠은 낯설고 불편하시겠지만, 모두의 안전을 위한 일이니 너그러이 협조해 주시기 바랍니다.</p>
 <p>10월 31일, 태화여고가 다시 개화합니다. 빈 책상 없이 다시 만날 수 있기를 바랍니다.</p>
 <p class="sign">2033년 10월<br><b>태화여자고등학교장</b></p></div></div>`},
@@ -113,7 +113,7 @@ club: {sec:"학교생활", t:"동아리", html:`
 <div class="club"><div class="ph"><b>언론·토론</b><span>4개 동아리</span></div><table class="tbl"><thead><tr><th>동아리명</th><th>동아리 소개</th></tr></thead><tbody><tr><td class="cn">태화신문</td><td>학교 신문 발행, 교내 소식 취재와 인터뷰</td></tr><tr><td class="cn">TBS</td><td>교내 방송 송출과 행사 진행</td></tr><tr><td class="cn">논객</td><td>시사 쟁점 디베이트, 교내 토론대회 운영</td></tr><tr><td class="cn">TMUN</td><td>모의유엔 영어 토론과 결의안 작성</td></tr></tbody></table></div>
 <div class="club"><div class="ph"><b>예술·체육</b><span>5개 동아리</span></div><table class="tbl"><thead><tr><th>동아리명</th><th>동아리 소개</th></tr></thead><tbody><tr><td class="cn">화담</td><td>회화·드로잉, 학기말 교내 전시회</td></tr><tr><td class="cn">글샘</td><td>시·소설 창작과 문집 발간</td></tr><tr><td class="cn">찰칵</td><td>사진으로 교정과 학교 행사 기록</td></tr><tr><td class="cn">셔틀</td><td>배드민턴, 교내 리그전 운영</td></tr><tr><td class="cn">피구왕</td><td>피구·발야구 등 단체 구기 활동</td></tr></tbody></table></div>`},
 
-health: {sec:"학교생활", t:"보건실", html:`
+health: {sec:"학교생활", t:"보건·방역 안내", html:`
 <table class="tbl"><tbody>
 <tr><th>위치</th><td>본관 1층 중앙 현관 왼쪽</td></tr>
 <tr><th>운영 시간</th><td>평일 08:00 ~ 16:30 (점심시간 포함)</td></tr>
