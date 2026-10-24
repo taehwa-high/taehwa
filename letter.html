@@ -68,7 +68,7 @@ const AT = $('when-at'), DP = $('dp');
 let [vy, vm] = TH.CAL_MONTH.split('-').map(Number), pick = null, pickH = "", pickMi = "";
 // 시간은 시·분 목록으로 고른다 (브라우저 시간 선택 창은 골라도 저절로 닫히지 않아서)
 const opts = (list, v, label) => `<option value="">${label}</option>` + list.map(x => `<option${x === v ? ' selected' : ''}>${x}</option>`).join('');
-const HOURS = Array.from({length:24}, (_, i) => String(i).padStart(2, '0')), MINS = Array.from({length:12}, (_, i) => String(i*5).padStart(2, '0'));
+const HOURS = Array.from({length:24}, (_, i) => String(i).padStart(2, '0')), MINS = ["00", "30"];
 function dpDraw(){
   const first = new Date(vy, vm-1, 1).getDay(), last = new Date(vy, vm, 0).getDate();
   let h = `<div class="dp-hd"><button type="button" data-m="-1" aria-label="이전 달">‹</button><b>${vy}년 ${vm}월</b><button type="button" data-m="1" aria-label="다음 달">›</button></div><table><tr>${[..."일월화수목금토"].map(d => `<th>${d}</th>`).join('')}</tr><tr>`;
