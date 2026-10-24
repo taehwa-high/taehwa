@@ -411,7 +411,7 @@ footer.ft .in img.emb{width:56px;height:56px;flex:none}
 .dp-pop td button:hover{background:var(--pri-l)}
 .dp-pop td button.on{background:var(--pri);color:#fff}
 .dp-ft{display:flex;gap:8px;margin-top:8px}
-.dp-ft input{flex:1;min-width:0;padding:6px 8px;border:1px solid #bdbab0;font:inherit}
+.dp-ft select{flex:1;min-width:0;padding:6px 8px;border:1px solid #bdbab0;background:#fff;font:inherit;cursor:pointer}
 .dp-err{margin:6px 0 0;font-size:13px;color:var(--stamp)}
 .dp-err:empty{display:none}
 @media (max-width:600px){.dp-pop{left:auto;right:0}}

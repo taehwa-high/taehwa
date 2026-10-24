@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261025l"><title>개학 안내 · 태화여자고등학교</title></head><body>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261025m"><title>개학 안내 · 태화여자고등학교</title></head><body>
 <div id="hd"></div>
 <section class="sv-top"><div class="wrap"><h1>알림마당</h1></div></section>
 <div class="crumb"><div class="wrap"><span>홈</span><span>›</span><span>알림마당</span><span>›</span><span>가정통신문</span><span>›</span><b>개학 안내</b></div></div>
@@ -59,13 +59,16 @@
 <div class="bv-nav"><div><b>이전글</b><span class="muted">이전글이 없습니다.</span></div><div><b>다음글</b><a href="view.html#l2">2학기 방과후학교 수강 신청 안내</a></div></div>
 <div class="btns"><a class="btn" href="letters.html">목록</a></div></section></div>
 <div id="ft"></div>
-<script src="config.js?v=20261025l"></script><script src="app.js?v=20261025l"></script><script src="notices.js?v=20261025l"></script><script src="layout.js?v=20261025l"></script>
+<script src="config.js?v=20261025m"></script><script src="app.js?v=20261025m"></script><script src="notices.js?v=20261025m"></script><script src="layout.js?v=20261025m"></script>
 <script>mount({sec:"알림마당",active:"가정통신문"});
 const $ = id => document.getElementById(id);
 $('lt-em').innerHTML = EMBLEM;
 // 참석 일시 달력: CAL_MONTH 달로 열리고, 무엇을 골라도 CANDIDATE_DATES[0] 으로 적힌다
 const AT = $('when-at'), DP = $('dp');
-let [vy, vm] = TH.CAL_MONTH.split('-').map(Number), pick = null, pickT = "";
+let [vy, vm] = TH.CAL_MONTH.split('-').map(Number), pick = null, pickH = "", pickMi = "";
+// 시간은 시·분 목록으로 고른다 (브라우저 시간 선택 창은 골라도 저절로 닫히지 않아서)
+const opts = (list, v, label) => `<option value="">${label}</option>` + list.map(x => `<option${x === v ? ' selected' : ''}>${x}</option>`).join('');
+const HOURS = Array.from({length:24}, (_, i) => String(i).padStart(2, '0')), MINS = Array.from({length:12}, (_, i) => String(i*5).padStart(2, '0'));
 function dpDraw(){
   const first = new Date(vy, vm-1, 1).getDay(), last = new Date(vy, vm, 0).getDate();
   let h = `<div class="dp-hd"><button type="button" data-m="-1" aria-label="이전 달">‹</button><b>${vy}년 ${vm}월</b><button type="button" data-m="1" aria-label="다음 달">›</button></div><table><tr>${[..."일월화수목금토"].map(d => `<th>${d}</th>`).join('')}</tr><tr>`;
@@ -74,21 +77,24 @@ function dpDraw(){
     if((first + d - 1) % 7 === 0 && d > 1) h += '</tr><tr>';
     h += `<td><button type="button" data-d="${d}"${pick === `${vy}-${vm}-${d}` ? ' class="on"' : ''}>${d}</button></td>`;
   }
-  DP.innerHTML = h + `</tr></table><div class="dp-ft"><input type="time" id="dp-t" aria-label="시간" value="${pickT}"><button type="button" class="btn dark" id="dp-ok">선택</button></div><p class="dp-err" id="dp-err"></p>`;
+  DP.innerHTML = h + `</tr></table><div class="dp-ft"><select id="dp-h" aria-label="시">${opts(HOURS, pickH, '시')}</select><select id="dp-mi" aria-label="분">${opts(MINS, pickMi, '분')}</select><button type="button" class="btn dark" id="dp-ok">선택</button></div><p class="dp-err" id="dp-err"></p>`;
 }
 const dpClose = () => { DP.hidden = true; };
 AT.addEventListener('click', () => { if(DP.hidden){ dpDraw(); DP.hidden = false; } else dpClose(); });
 DP.addEventListener('click', e => {
   e.stopPropagation();   // 다시 그리면 누른 버튼이 사라져 '바깥 클릭'으로 오인하지 않게
   const b = e.target.closest('button'); if(!b) return;
-  pickT = $('dp-t').value;
   if(b.dataset.m){ vm += +b.dataset.m; if(vm < 1){ vm = 12; vy--; } if(vm > 12){ vm = 1; vy++; } dpDraw(); }
-  else if(b.dataset.d){ pick = `${vy}-${vm}-${b.dataset.d}`; if(pickT) dpDone(); else dpDraw(); }
-  else if(b.id === 'dp-ok'){ if(!pick || !pickT){ $('dp-err').textContent = !pick ? '날짜를 골라 주세요.' : '시간을 골라 주세요.'; return; } dpDone(); }
+  else if(b.dataset.d){ pick = `${vy}-${vm}-${b.dataset.d}`; if(pickH && pickMi) dpDone(); else dpDraw(); }
+  else if(b.id === 'dp-ok'){ if(!pick || !pickH || !pickMi){ $('dp-err').textContent = !pick ? '날짜를 골라 주세요.' : '시간을 골라 주세요.'; return; } dpDone(); }
 });
 // 날짜와 시간이 모두 골라지면 '선택'을 누르지 않아도 바로 적히고 달력이 닫힌다
 function dpDone(){ AT.value = TH.CANDIDATE_DATES[0]; dpClose(); render(); }
-DP.addEventListener('change', e => { if(e.target.id !== 'dp-t') return; pickT = e.target.value; if(pick && pickT) dpDone(); });
+DP.addEventListener('change', e => {
+  if(e.target.id === 'dp-h') pickH = e.target.value; else if(e.target.id === 'dp-mi') pickMi = e.target.value; else return;
+  $('dp-err').textContent = "";
+  if(pick && pickH && pickMi) dpDone();
+});
 document.addEventListener('click', e => { if(!DP.hidden && !e.target.closest('.dp')) dpClose(); });
 document.addEventListener('keydown', e => { if(e.key === 'Escape') dpClose(); });
 let state = {remaining:0, open:false};
