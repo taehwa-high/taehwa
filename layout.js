@@ -81,6 +81,15 @@ function mount(opts){
     const q = f.querySelector('input').value.trim(), byWho = f.querySelector('select') && f.querySelector('select').selectedIndex === 1; let n = 0;
     document.querySelectorAll('table.list tbody tr').forEach(tr => { const c = tr.querySelector(byWho ? '.who' : '.tl'); const ok = !q || (c && c.textContent.includes(q)); tr.hidden = !ok; if(ok) n++; });
     if(q && !n) toast('검색 결과가 없습니다.'); }));
+  // 모바일: 상단 메뉴를 누르면 이동하지 않고 서브 메뉴를 펼친다 (한 번 더 누르면 닫힘)
+  const narrow = window.matchMedia('(max-width:820px)');
+  document.querySelectorAll('.gnb .m>a').forEach(a => a.addEventListener('click', e => {
+    if(!narrow.matches) return;
+    e.preventDefault(); const m = a.parentElement, open = !m.classList.contains('open');
+    document.querySelectorAll('.gnb .m.open').forEach(x => x.classList.remove('open'));
+    m.classList.toggle('open', open);
+  }));
+  document.addEventListener('click', e => { if(!e.target.closest('.gnb')) document.querySelectorAll('.gnb .m.open').forEach(x => x.classList.remove('open')); });
   const gs = document.getElementById('gsearch');
   if(gs) gs.addEventListener('submit', e => { e.preventDefault(); const q = gs.querySelector('input').value.trim();
     if(!q){ toast('검색어를 입력하세요.'); return; }
