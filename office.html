@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261025c"><title>교무실 · 태화여자고등학교</title></head><body>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261025d"><title>교무실 · 태화여자고등학교</title></head><body>
 <header class="site"><div class="wrap"><a class="brand" href="index.html">태화여자고등학교<small>교무실 · 관리자 전용</small></a></div></header>
 <main><div class="wrap">
 <h1>회신서 관리</h1>
@@ -10,12 +10,15 @@
 <p class="lead" id="summary"></p>
 <p><button class="btn ghost" id="reload">새로고침</button> <button class="btn ghost" id="toggle"></button> <button class="btn ghost" id="logout">잠그기</button></p>
 <h2>참석 일시 집계</h2><div class="tally" id="tally"></div>
+<h2>회신서 직접 추가</h2>
+<form id="af" class="card" style="max-width:520px"><div class="field"><label class="t" for="an">닉네임</label><input type="text" id="an" maxlength="20" autocomplete="off" required></div><div class="field"><span class="t" style="display:block;font-size:14px;color:#666;margin-bottom:6px">참석 일시</span><div class="checks" id="ad"></div></div><button class="btn dark" id="ab">추가</button><div id="aout"></div></form>
+<p class="muted">접수 마감 상태나 제출 시작 시각 전에도 추가할 수 있고, 추가한 회신서도 정원에 포함됩니다.</p>
 <h2>접수된 회신서</h2>
 <div style="overflow-x:auto"><table class="list" style="min-width:600px"><thead><tr><th class="num">번호</th><th style="white-space:nowrap">닉네임</th><th>참석 일시</th><th>제출 시각</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
 <p class="muted">회신서를 삭제하면 그 자리가 바로 다시 열립니다.</p>
 </div>
 </div></main>
-<script src="config.js?v=20261025c"></script><script src="app.js?v=20261025c"></script>
+<script src="config.js?v=20261025d"></script><script src="app.js?v=20261025d"></script>
 <script>
 const $ = id => document.getElementById(id);
 if(TH.PREVIEW) document.getElementById('pv').hidden = false;
@@ -50,6 +53,16 @@ $('rows').addEventListener('click', async ev => {
 });
 $('toggle').addEventListener('click', async () => {
   try { await rpc('office_set_open', {p_password: pw, p_open: !data.status.open}); await load(); } catch(e){ alert(e.message); }
+});
+$('ad').innerHTML = TH.CANDIDATE_DATES.map(d => `<label><input type="checkbox" name="ad" value="${esc(d)}" checked> <span>${esc(d)}</span></label>`).join('');
+$('af').addEventListener('submit', async ev => {
+  ev.preventDefault(); $('aout').innerHTML = "";
+  const nick = $('an').value.trim(), dates = [...document.querySelectorAll('input[name=ad]:checked')].map(x => x.value);
+  if(!dates.length){ $('aout').innerHTML = `<div class="msg err">참석 일시를 하나 이상 골라 주세요.</div>`; return; }
+  $('ab').disabled = true;
+  try { await rpc('office_add', {p_password: pw, p_nickname: nick, p_dates: dates}); $('an').value = ""; await load(); }
+  catch(e){ $('aout').innerHTML = `<div class="msg err">${esc(e.message)}</div>`; }
+  $('ab').disabled = false;
 });
 $('reload').addEventListener('click', () => load().catch(e => alert(e.message)));
 $('logout').addEventListener('click', () => { try { sessionStorage.removeItem('th_pw'); } catch(e){} location.reload(); });

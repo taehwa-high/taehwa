@@ -20,6 +20,13 @@ async function mockRpc(fn, a){
   if(a.p_password !== "1234") throw new Error("비밀번호가 맞지 않습니다.");
   if(fn === "office_list") return {rows: s.rows, status: status(), capacity: cap};
   if(fn === "office_delete"){ s.rows = s.rows.filter(r => r.id !== a.p_id); save(s); return status(); }
+  if(fn === "office_add"){
+    const nick = (a.p_nickname || "").trim();
+    if(!nick || nick.length > 20) throw new Error("닉네임을 1~20자로 적어 주세요.");
+    if(s.rows.length >= cap) throw new Error("정원이 모두 찼습니다.");
+    if(s.rows.some(r => r.nickname.toLowerCase() === nick.toLowerCase())) throw new Error("이미 같은 이름으로 제출된 회신서가 있습니다.");
+    s.rows.push({id: ++s.seq, nickname: nick, dates: a.p_dates, created_at: new Date().toISOString()}); save(s); return status();
+  }
   if(fn === "office_set_open"){ s.open = !!a.p_open; save(s); return status(); }
 }
 async function rpc(fn, args){
