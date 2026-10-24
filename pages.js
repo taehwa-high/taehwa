@@ -18,20 +18,19 @@ greet: {sec:"학교소개", t:"학교장 인사말", html:`
 <p>길고 어려운 시간을 지나 태화시에 다시 일상이 찾아왔습니다. 그동안 학교를 지켜 주신 학부모님과 지역 주민 여러분께 깊이 감사드립니다.</p>
 <p>태화여자고등학교는 1971년 개교 이래 '참되고, 바르고, 아름다운 사람'을 길러 온 학교입니다. 올해 봄, 우리는 예상하지 못한 일로 교문을 닫아야 했고, 학생들은 각자의 자리에서 그 시간을 견뎌 냈습니다.</p>
 <p>이제 교직원 모두가 학생들이 안전하게 돌아올 수 있도록 교실을 정비하고 있습니다. 정문에는 검역 게이트를 새로 설치하였고, 본관 현관에는 출입 명부를 비치하였습니다. 처음 며칠은 낯설고 불편하시겠지만, 모두의 안전을 위한 일이니 너그러이 협조해 주시기 바랍니다.</p>
-<p>10월 31일, 전교생이 함께 개학합니다. 빈 책상 없이 모두 다시 만날 수 있기를 바랍니다.</p>
+<p>10월 31일, 태화여고가 다시 개화합니다. 빈 책상 없이 다시 만날 수 있기를 바랍니다.</p>
 <p class="sign">2033년 10월<br><b>태화여자고등학교장</b></p></div></div>`},
 
 history: {sec:"학교소개", t:"학교 연혁", html:`
 <p class="desc">1971년 개교 이후 태화여자고등학교가 걸어온 길입니다.</p>
 <ol class="hist">
-<li><b>2033. 10. 31.</b><span>전교 개학 <em>예정</em></span></li>
+<li><b>2033. 10. 31.</b><span>개학 <em>예정</em></span></li>
 <li><b>2033. 10. 26.</b><span>개학 준비 기간 운영 (교직원 출입 재개)</span></li>
 <li><b>2033. 10. 24.</b><span>정문 검역 게이트 설치 완료</span></li>
-<li><b>2033. 04.</b><span>국가 감염병 재난 사태에 따른 휴업</span></li>
+<li><b>2033. 07. 01.</b><span>국가 감염병 재난 사태에 따른 휴업</span></li>
 <li><b>2033. 03. 02.</b><span>제63회 입학식 (신입생 248명)</span></li>
 <li><b>2033. 02. 10.</b><span>제60회 졸업식 (졸업생 2만 1,436명 배출)</span></li>
 <li><b>2024. 03. 01.</b><span>고교학점제 연구학교 지정</span></li>
-<li><b>2012. 03. 01.</b><span>과학중점학교 지정</span></li>
 <li><b>1998. 11. 20.</b><span>체육관(태화관) 준공</span></li>
 <li><b>1985. 08. 30.</b><span>본관 신축 이전 (태화시 태화로 100)</span></li>
 <li><b>1974. 02. 15.</b><span>제1회 졸업식 (졸업생 312명)</span></li>
@@ -81,30 +80,12 @@ cal: {sec:"학사안내", t:"학사일정", html:`
 <div class="cal2"><div><h3 class="sub">2033년 10월</h3>CAL10</div><div><h3 class="sub">2033년 11월</h3>CAL11</div></div>
 <table class="tbl sched"><thead><tr><th>날짜</th><th>내용</th><th>비고</th></tr></thead><tbody>
 <tr><td>10. 26.(수) ~ 10. 30.(일)</td><td>개학 준비 기간</td><td>교직원 출입</td></tr>
-<tr><td>10. 31.(월)</td><td><b>전교 개학</b> · 담임 조회 · 안전 교육</td><td>단축 수업</td></tr>
+<tr><td>10. 31.(월)</td><td><b>개학</b> · 담임 조회 · 안전 교육</td><td>단축 수업</td></tr>
 <tr><td>11. 1.(화)</td><td>급식 재개 (전 학년)</td><td></td></tr>
-<tr><td>11. 3.(목)</td><td>학생독립운동기념일 기념 조회</td><td></td></tr>
-<tr><td>11. 7.(월) ~ 11. 9.(수)</td><td>학력 진단 평가 (1·2학년)</td><td></td></tr>
-<tr><td>11. 17.(목)</td><td>대학수학능력시험</td><td>교육부 발표에 따름</td></tr>
+<tr><td><s>11. 17.(목)</s></td><td><s>대학수학능력시험</s> <span class="st w">연기</span></td><td>교육부 발표에 따라 12. 22.(목)으로 연기</td></tr>
 <tr><td>11. 21.(월)</td><td>2학기 방과후학교 개강</td><td>예정</td></tr>
 </tbody></table>
 <p class="muted small">학사일정은 감염관리국 지침에 따라 변경될 수 있습니다.</p>`},
-
-curri: {sec:"학사안내", t:"교육과정", html:`
-<p class="desc">본교는 2022 개정 교육과정과 고교학점제에 따라 학년별 교육과정을 운영합니다. 2학기 교육과정은 개학 일정에 맞추어 <b>재편성</b>하였습니다.</p>
-<h3 class="sub">학년별 편성 (2학기)</h3>
-<div class="sx"><table class="tbl c"><thead><tr><th>학년</th><th>교과(군)</th><th>과목</th><th>학점</th></tr></thead><tbody>
-<tr><td rowspan="3">1학년</td><td>공통</td><td>공통국어2 · 공통수학2 · 공통영어2</td><td>12</td></tr>
-<tr><td>탐구</td><td>통합사회2 · 통합과학2 · 과학탐구실험2</td><td>9</td></tr>
-<tr><td>체육·예술</td><td>체육2 · 음악</td><td>5</td></tr>
-<tr><td rowspan="3">2학년</td><td>일반 선택</td><td>문학 · 대수 · 영어Ⅱ</td><td>12</td></tr>
-<tr><td>선택(택3)</td><td>물리학 · 화학 · 생명과학 · 세계사 · 사회와 문화 · 경제</td><td>9</td></tr>
-<tr><td>교양</td><td>정보 · 진로와 직업</td><td>4</td></tr>
-<tr><td rowspan="3">3학년</td><td>진로 선택</td><td>주제 탐구 독서 · 확률과 통계 · 영어 독해와 작문</td><td>12</td></tr>
-<tr><td>선택(택2)</td><td>미술 창작 · 생활과 과학 · 윤리와 사상 · 심화 국어</td><td>6</td></tr>
-<tr><td>교양</td><td>보건 · 심리학</td><td>4</td></tr>
-</tbody></table></div>
-<div class="note">휴업 기간 동안 진행하지 못한 수업은 11월부터 보충 수업으로 운영합니다. 세부 과목별 평가 계획은 개학 후 각 교과 담당 교사가 안내합니다.</div>`},
 
 meal: {sec:"학교생활", t:"급식 안내", html:`
 <div class="note">급식은 <b>11. 1.(화)부터 전 학년</b> 정상 운영합니다. 개학일인 10. 31.(월)은 단축 수업으로 급식이 없습니다.</div>
@@ -118,17 +99,7 @@ meal: {sec:"학교생활", t:"급식 안내", html:`
 </tr></tbody></table></div>
 <p class="muted small">알레르기 유발 식품: 1.난류 2.우유 3.메밀 4.땅콩 5.대두 6.밀 7.고등어 8.게 9.새우 10.돼지고기 11.복숭아 12.토마토 13.아황산류 14.호두 15.닭고기 16.쇠고기 17.오징어 18.조개류 19.잣<br>식재료 수급 상황에 따라 식단이 바뀔 수 있습니다.</p>`},
 
-after: {sec:"학교생활", t:"방과후학교", html:`
-<p class="desc">2학기 방과후학교는 개학 일정에 따라 <b>11. 21.(월) 개강</b>으로 연기되었습니다. 이미 신청한 학생은 다시 신청하지 않아도 됩니다.</p>
-<div class="sx"><table class="tbl c"><thead><tr><th>강좌명</th><th>대상</th><th>요일</th><th>시간</th><th>정원</th><th>상태</th></tr></thead><tbody>
-<tr><td class="l">수능 국어 문학 심화</td><td>3학년</td><td>월·수</td><td>16:20 ~ 17:50</td><td>30</td><td><span class="st w">개강 연기</span></td></tr>
-<tr><td class="l">미적분 개념 완성</td><td>2학년</td><td>화·목</td><td>16:20 ~ 17:50</td><td>30</td><td><span class="st w">개강 연기</span></td></tr>
-<tr><td class="l">영어 독해 기초반</td><td>1학년</td><td>월·수</td><td>16:20 ~ 17:50</td><td>25</td><td><span class="st w">개강 연기</span></td></tr>
-<tr><td class="l">생명과학 실험 탐구</td><td>2·3학년</td><td>금</td><td>16:20 ~ 18:00</td><td>16</td><td><span class="st x">폐강</span></td></tr>
-<tr><td class="l">미술 포트폴리오</td><td>전 학년</td><td>화</td><td>16:20 ~ 18:00</td><td>15</td><td><span class="st w">개강 연기</span></td></tr>
-<tr><td class="l">합창부 (교가 합창)</td><td>전 학년</td><td>목</td><td>16:20 ~ 17:20</td><td>40</td><td><span class="st w">개강 연기</span></td></tr>
-</tbody></table></div>
-<p class="muted small">'생명과학 실험 탐구'는 과학실 정비 일정으로 이번 학기 폐강합니다. 문의: 방과후학교 담당 (본관 2층 교무실)</p>`},
+after: {sec:"학교생활", t:"방과후학교", html:`<div class="note">준비 중입니다.</div>`},
 
 club: {sec:"학교생활", t:"동아리", html:`
 <p class="desc">태화여자고등학교에는 5개 분과, 23개의 학생 자율 동아리가 있습니다. 동아리 연합회가 분과별 활동과 축제·발표회를 함께 운영합니다.</p>
@@ -157,7 +128,7 @@ health: {sec:"학교생활", t:"보건실", html:`
 </ol>
 <div class="note">보건실 이용 기록은 감염관리국 지침에 따라 보관하며, 건강 이상이 확인되면 보호자에게 즉시 연락합니다.</div>`},
 
-news: {sec:"알림마당", t:"학교 소식", html:`<div class="ncards" id="ncards"></div><div id="nview"></div>`},
+news: {sec:"알림마당", t:"학교 소식", html:`<div class="note">준비 중입니다.</div>`},
 
 council: {sec:"정보공개", t:"학교운영위원회", html:`
 <p class="desc">학교운영위원회는 학부모·교원·지역 위원이 함께 학교 운영의 주요 사항을 심의하는 기구입니다.</p>
@@ -213,6 +184,6 @@ const NEWS = [
 function renderPage(id){
   const p = PAGES[id] || PAGES.greet;
   let html = p.html.replace('CAL10', calMonth(2033,10,{26:['ev','준비'],27:['ev',''],28:['ev',''],29:['ev',''],30:['ev',''],31:['big','개학']}))
-                   .replace('CAL11', calMonth(2033,11,{1:['ev','급식'],3:['ev','조회'],7:['ev','진단'],8:['ev',''],9:['ev',''],17:['big','수능'],21:['ev','방과후']}));
+                   .replace('CAL11', calMonth(2033,11,{1:['ev','급식'],17:['ev','수능 연기'],21:['ev','방과후']}));
   return {p, html};
 }
