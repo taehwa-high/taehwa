@@ -250,6 +250,8 @@ main h2{font-size:20px;margin:28px 0 10px;padding-bottom:6px;border-bottom:1px s
   .gnb .m{position:static}
   .gnb .m>a{padding:0 6px;font-size:15px;line-height:46px;white-space:nowrap}
   .gnb .m.open>a{background:var(--pri-d)}
+  .gnb .m:not(.on):not(.open):hover>a{background:none}   /* 터치 뒤 남는 호버 표시 없애기 */
+  .gnb .sub a.hot{background:var(--pri-l);color:var(--pri);font-weight:500}
   .gnb .m:not(.open) .sub{display:none!important}
   .gnb .m.open .sub{display:grid;grid-template-columns:1fr 1fr;top:100%}
   .gnb .sub a{padding:12px 16px}
