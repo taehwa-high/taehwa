@@ -1,10 +1,10 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261026d"><title>회원가입 · 태화여자고등학교</title></head><body>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261026e"><title>회원가입 · 태화여자고등학교</title></head><body>
 <div id="hd"></div>
 <section class="sv-top"><div class="wrap"><h1>회원 서비스</h1></div></section>
 <div class="crumb"><div class="wrap"><span>홈</span><span>›</span><b>회원가입</b></div></div>
 <div class="wrap sv one"><section class="pg"><div id="app"></div></section></div>
 <div id="ft"></div>
-<script src="config.js?v=20261026d"></script><script src="app.js?v=20261026d"></script><script src="layout.js?v=20261026d"></script>
+<script src="config.js?v=20261026e"></script><script src="app.js?v=20261026e"></script><script src="layout.js?v=20261026e"></script>
 <script>
 mount({});
 // 기초조사서. 보기는 서희지·한재희·이소록·정의현·배유림 순서로 적고, 화면에서는 섞어 보여 준다 (점수는 서버가 매긴다)
@@ -78,7 +78,7 @@ function cards(st, notice){
   <p class="desc">${st.last ? '남아 있는 마지막 한 명입니다.' : '선택할 수 있는 파일 중 한 장을 고르세요. 고른 뒤에는 바꿀 수 없습니다.'}</p>
   <div class="tst-cards">${st.cards.map((c, i) => `<button type="button" class="tst-card${c.st === 'ok' ? '' : ' off'}${c.st === 'taken' ? ' taken' : ''}" data-k="${esc(c.key)}" style="--c:${esc(c.color)}"${c.st === 'ok' ? '' : ' disabled'}>
     <span class="lt">${LETTERS[i]}</span><span class="chip"></span><span class="ln">“${esc(c.line)}”</span>${c.st === 'taken' ? '<span class="tk">이미 선택된 파일입니다.</span>' : ''}</button>`).join('')}</div>
-  <p class="btns"><button type="button" class="btn ghost" id="rf">새로고침</button></p>`;
+  <p class="tst-rf"><button type="button" id="rf">새로고침</button></p>`;
   $('rf').onclick = () => loadCards();
   app.querySelectorAll('.tst-card:not(.off)').forEach(b => b.onclick = async () => {
     if(!confirm('이 카드로 확정하시겠습니까? 확정 후에는 바꿀 수 없습니다.')) return;

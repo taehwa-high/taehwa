@@ -437,6 +437,9 @@ footer.ft .in img.emb{width:56px;height:56px;flex:none}
 .tst-card{position:relative}
 .tst-card.taken{opacity:1;filter:none;background:#f3f3f2}
 .tst-card.taken>span:not(.tk){visibility:hidden}
+.pg .tst-rf{text-align:center;margin:28px 0 0}
+.tst-rf button{background:none;border:0;padding:4px 8px;font:inherit;font-size:13px;color:#888;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.tst-rf button:hover{color:#444}
 .tst-card .tk{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--red)}
 .tst-card .lt{font-weight:700;color:#999}
 .tst-card .chip{width:14px;height:14px;border-radius:50%;background:var(--c);box-shadow:0 0 0 1px rgba(0,0,0,.15)}
