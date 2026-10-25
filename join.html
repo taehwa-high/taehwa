@@ -17,7 +17,6 @@ const SURVEY = [
 ];
 const LETTERS = "ABCDE";
 const $ = id => document.getElementById(id), app = $('app');
-const TESTER = location.hash === '#tester';
 // 진행 상황은 이 화면에만 들고 있다. 카드를 확정해야 서버에 기록이 남고, 그 전에 나가면 처음부터 다시 할 수 있다
 let me = null;   // {nick, tester, answers}
 function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
@@ -103,7 +102,7 @@ function done(){
 }
 
 async function start(){
-  try { (TESTER || (await rpc('test_status')).open) ? signup() : closed(); }
+  try { (await rpc('test_status')).open ? signup() : closed(); }
   catch(x){ app.innerHTML = `<div class="msg err">${esc(x.message)}</div>`; }
 }
 // 예전 방식에서 남은 값 정리
