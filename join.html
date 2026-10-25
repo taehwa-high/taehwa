@@ -23,7 +23,7 @@ function setToken(t){ token = t; try { t ? localStorage.setItem('th_test', t) : 
 function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 const ERR = {closed:"현재 테스트가 진행 중입니다.", noreply:"등록된 이름이 없습니다.",
   already:"이미 가입한 닉네임입니다. 처음 가입한 기기·브라우저에서 이어 주세요."};
-const outro = t => t ? '<p class="small muted" style="margin-top:18px">테스터 계정입니다. <a href="#" id="relog" style="text-decoration:underline">처음부터 다시 하기</a></p>' : '';
+const outro = t => t ? '<p class="small muted" style="margin-top:18px">테스터 계정입니다. <a href="#" id="next" style="text-decoration:underline">다른 테스터로 하기</a> · <a href="#" id="relog" style="text-decoration:underline">이 테스터 기록 지우고 다시 하기</a></p>' : '';
 
 function closed(){ app.innerHTML = '<div class="tst-wait"><p>현재 테스트가 진행 중입니다.</p></div>'; }
 
@@ -89,7 +89,9 @@ function show(st, notice){
   else if(st.stage === 'survey') survey(st);
   else if(st.stage === 'cards') cards(st, notice);
   else done(st);
-  const r = $('relog'); if(r) r.onclick = e => { e.preventDefault(); e.stopPropagation(); setToken(''); load(); };
+  // 다른 테스터로: 이 기록은 그대로 두고 새로 가입 / 기록 지우기: 이 테스터의 답과 카드를 지운다
+  const nx = $('next'); if(nx) nx.onclick = e => { e.preventDefault(); e.stopPropagation(); setToken(''); signup(); };
+  const r = $('relog'); if(r) r.onclick = async e => { e.preventDefault(); e.stopPropagation(); try { await rpc('test_reset', {p_token: token}); } catch(x){} setToken(''); signup(); };
 }
 
 async function load(){

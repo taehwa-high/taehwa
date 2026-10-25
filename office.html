@@ -59,7 +59,7 @@ function renderTest(t){
     <td style="white-space:nowrap">${m.char ? '확정' : m.answered ? '카드 선택 중' : '기초조사서'}</td><td style="white-space:nowrap">${chip(m)}</td><td class="date">${m.picked_at ? fmt(m.picked_at) : ''}</td>
     <td style="white-space:nowrap">${m.char ? `<button class="btn ghost" data-t="unpick" data-id="${m.id}">확정 취소</button> ` : ''}<button class="btn ghost" data-t="delete" data-id="${m.id}">삭제</button></td></tr>`).join('')
     : `<tr><td colspan="5" class="muted">아직 가입한 사람이 없습니다.</td></tr>`;
-  $('tnote').textContent = `닉네임 '${t.tester_nick}'으로 가입하면 테스터 계정이 됩니다. 테스트가 닫혀 있어도 join.html#tester 에서 가입할 수 있고, 카드 경쟁·정원에 들어가지 않으며 5명이 모두 확정하면 테스트는 자동으로 닫힙니다.`;
+  $('tnote').textContent = `이름을 ${t.tester_nick.split(',').join('·')} 중 하나로 가입하면 테스터 계정이 됩니다. 테스트가 닫혀 있어도 join.html#tester 에서 가입할 수 있고, 테스터끼리만 카드를 나눠 가지며 실제 참가자와 섞이지 않습니다. 5명이 모두 확정하면 테스트는 자동으로 닫힙니다.`;
 }
 $('ttest').addEventListener('click', async () => {
   if(!tdata.test_open && !confirm('테스트를 열면 회신서를 낸 사람 누구나 가입하고 선착순으로 카드를 고를 수 있습니다. 열까요?')) return;
