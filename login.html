@@ -1,0 +1,62 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261026a"><title>로그인 · 태화여자고등학교</title></head><body>
+<div id="hd"></div>
+<section class="sv-top"><div class="wrap"><h1>회원 서비스</h1></div></section>
+<div class="crumb"><div class="wrap"><span>홈</span><span>›</span><b id="bc">로그인</b></div></div>
+<div class="wrap sv one"><section class="pg"><div id="app"></div></section></div>
+<div id="ft"></div>
+<script src="config.js?v=20261026a"></script><script src="app.js?v=20261026a"></script><script src="layout.js?v=20261026a"></script>
+<script>
+mount({});
+const $ = id => document.getElementById(id), app = $('app');
+let token = ""; try { token = sessionStorage.getItem('th_file') || ""; } catch(e){}
+function setToken(t){ token = t; try { t ? sessionStorage.setItem('th_file', t) : sessionStorage.removeItem('th_file'); } catch(e){} }
+const nl = s => esc(s).replace(/\n/g, '<br>');
+const logout = '<p class="btns"><button class="btn ghost" id="lo">로그아웃</button></p>';
+
+function form(err){
+  $('bc').textContent = '로그인';
+  app.innerHTML = `<h2 class="ttl">로그인</h2><form id="f" class="card tst-form" autocomplete="off">
+  <div class="field"><label class="t" for="lid">아이디</label><input type="text" id="lid" maxlength="20" required></div>
+  <div class="field"><label class="t" for="pw">비밀번호</label><input type="password" id="pw" maxlength="50" required></div>
+  <div class="btns"><button class="btn dark" id="go">로그인</button></div><div id="out">${err ? `<div class="msg err">${err}</div>` : ''}</div></form>
+  <p class="small muted" style="text-align:center">계정이 없으면 <a href="join.html" style="text-decoration:underline">회원가입</a>을 먼저 해 주세요.</p>`;
+  engOnly($('lid')); engOnly($('pw'));
+  $('f').addEventListener('submit', async e => {
+    e.preventDefault(); $('go').disabled = true; $('out').innerHTML = '';
+    try {
+      const r = await rpc('file_login', {p_login: $('lid').value, p_password: toEng($('pw').value)});
+      if(!r.ok){ $('out').innerHTML = '<div class="msg err">아이디 또는 비밀번호가 맞지 않습니다.</div>'; $('go').disabled = false; return; }
+      setToken(r.token); load();
+    } catch(x){ $('out').innerHTML = `<div class="msg err">${esc(x.message)}</div>`; $('go').disabled = false; }
+  });
+}
+
+// 학교생활기록부 형식. record = {info:[[항목, 값]...], sections:[{t:제목, v:내용}...]}
+function record(st){
+  $('bc').textContent = '학교생활기록부';
+  const r = st.record || {}, info = [['성명', st.name]].concat(r.info || []), secs = r.sections || [];
+  app.innerHTML = `<article class="rec">
+  <header class="rec-head"><span class="rec-kind">학 교 생 활 기 록 부</span><b>태화여자고등학교</b></header>
+  <h3>1. 인적사항</h3>
+  <table class="rec-t"><tbody>${info.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${v ? nl(v) : ''}</td></tr>`).join('')}</tbody></table>
+  ${secs.map((s, i) => `<h3>${i + 2}. ${esc(s.t)}</h3><table class="rec-t"><tbody><tr><td class="rec-v">${s.v ? nl(s.v) : '<span class="muted">해당 사항 없음</span>'}</td></tr></tbody></table>`).join('')}
+  <div class="rec-sign"><span>위 사실을 증명합니다.</span><span>태화여자고등학교장</span></div>
+  </article>${logout}`;
+}
+
+function show(st){
+  if(st.stage === 'none'){ setToken(''); return form(); }
+  if(st.stage === 'file') record(st);
+  else app.innerHTML = `<div class="tst-wait"><p>${st.stage === 'notyet' ? '배정된 파일은 아직 공개되지 않았습니다.' : '아직 생존자 명부에 등록되지 않았습니다.'}</p>
+    ${st.stage === 'nochar' ? '<p><a class="btn" href="join.html">기초조사서로 가기</a></p>' : ''}</div>${logout}`;
+  const lo = $('lo'); if(lo) lo.onclick = () => { setToken(''); form(); };
+  const tj = app.querySelector('a[href="join.html"]'); if(tj) tj.onclick = () => { try { localStorage.setItem('th_test', token); } catch(e){} };
+}
+
+async function load(){
+  if(!token) return form();
+  try { show(await rpc('file_get', {p_token: token})); } catch(x){ form(esc(x.message)); }
+}
+load();
+</script>
+</body></html>
