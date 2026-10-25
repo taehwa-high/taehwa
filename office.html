@@ -19,7 +19,7 @@
 <h2>캐릭터 테스트 · 파일 공개</h2>
 <p class="lead" id="tsum"></p>
 <p><button class="btn ghost" id="ttest"></button> <button class="btn ghost" id="tfile"></button></p>
-<div style="overflow-x:auto"><table class="list" style="min-width:640px"><thead><tr><th style="white-space:nowrap">닉네임</th><th>아이디</th><th>진행</th><th>캐릭터</th><th>확정 시각</th><th></th></tr></thead><tbody id="trows"></tbody></table></div>
+<div style="overflow-x:auto"><table class="list" style="min-width:560px"><thead><tr><th style="white-space:nowrap">닉네임</th><th>진행</th><th>캐릭터</th><th>확정 시각</th><th></th></tr></thead><tbody id="trows"></tbody></table></div>
 <p class="muted" id="tnote"></p>
 <p class="muted">캐릭터 파일 로그인은 학번·비밀번호로 합니다. 이 창에서 <a href="login.html" style="text-decoration:underline">로그인 화면</a>으로 가면 공개 전에도 미리 볼 수 있습니다.</p>
 </div>
@@ -55,10 +55,10 @@ function renderTest(t){
   $('ttest').textContent = t.test_open ? '테스트 닫기' : '테스트 열기 (선착순)';
   $('tfile').textContent = t.file_open ? '파일 공개 멈추기' : '파일 공개하기';
   const chip = m => m.char ? `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${esc(m.color)};margin-right:6px"></span>${esc(m.char)}` : '';
-  $('trows').innerHTML = t.members.length ? t.members.map(m => `<tr><td style="white-space:nowrap">${esc(m.nickname)}${m.tester ? ' <span class="muted small">(테스터)</span>' : ''}</td><td>${esc(m.login_id)}</td>
+  $('trows').innerHTML = t.members.length ? t.members.map(m => `<tr><td style="white-space:nowrap">${esc(m.nickname)}${m.tester ? ' <span class="muted small">(테스터)</span>' : ''}</td>
     <td style="white-space:nowrap">${m.char ? '확정' : m.answered ? '카드 선택 중' : '기초조사서'}</td><td style="white-space:nowrap">${chip(m)}</td><td class="date">${m.picked_at ? fmt(m.picked_at) : ''}</td>
-    <td style="white-space:nowrap">${m.char ? `<button class="btn ghost" data-t="unpick" data-id="${m.id}">확정 취소</button> ` : ''}<button class="btn ghost" data-t="password" data-id="${m.id}">비밀번호</button> <button class="btn ghost" data-t="delete" data-id="${m.id}">삭제</button></td></tr>`).join('')
-    : `<tr><td colspan="6" class="muted">아직 가입한 사람이 없습니다.</td></tr>`;
+    <td style="white-space:nowrap">${m.char ? `<button class="btn ghost" data-t="unpick" data-id="${m.id}">확정 취소</button> ` : ''}<button class="btn ghost" data-t="delete" data-id="${m.id}">삭제</button></td></tr>`).join('')
+    : `<tr><td colspan="5" class="muted">아직 가입한 사람이 없습니다.</td></tr>`;
   $('tnote').textContent = `닉네임 '${t.tester_nick}'으로 가입하면 테스터 계정이 됩니다. 테스트가 닫혀 있어도 join.html#tester 에서 가입할 수 있고, 카드 경쟁·정원에 들어가지 않으며 5명이 모두 확정하면 테스트는 자동으로 닫힙니다.`;
 }
 $('ttest').addEventListener('click', async () => {
@@ -74,7 +74,6 @@ $('trows').addEventListener('click', async ev => {
   const m = tdata.members.find(x => x.id === Number(b.dataset.id)), act = b.dataset.t; let val = null;
   if(act === 'delete' && !confirm(`${m.nickname} 계정을 삭제할까요? 고른 카드도 다시 남은 카드로 돌아갑니다.`)) return;
   if(act === 'unpick' && !confirm(`${m.nickname}의 확정(${m.char})을 취소할까요? 카드가 다시 남은 카드로 돌아갑니다.`)) return;
-  if(act === 'password'){ val = prompt(`${m.nickname}의 새 비밀번호 (4자 이상)`); if(!val) return; val = toEng(val); }
   try { renderTest(await rpc('office_test_member', {p_password: pw, p_id: m.id, p_action: act, p_value: val})); } catch(e){ alert(e.message); }
 });
 $('lf').addEventListener('submit', async ev => {
