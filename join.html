@@ -66,7 +66,7 @@ function cards(st, notice){
   ${notice ? `<div class="msg err">${notice}</div>` : ''}
   <p class="desc">${st.last ? '남아 있는 마지막 한 명입니다.' : '선택할 수 있는 파일 중 한 장을 고르세요. 고른 뒤에는 바꿀 수 없습니다.'}</p>
   <div class="tst-cards">${st.cards.map((c, i) => `<button type="button" class="tst-card${c.st === 'ok' ? '' : ' off'}" data-k="${esc(c.key)}" style="--c:${esc(c.color)}"${c.st === 'ok' ? '' : ' disabled'}>
-    <span class="lt">${LETTERS[i]}</span><span class="chip"></span><span class="ln">“${esc(c.line)}”${c.st === 'taken' ? '<small>이미 선점되었습니다.</small>' : ''}</span></button>`).join('')}</div>
+    <span class="lt">${LETTERS[i]}</span><span class="chip"></span><span class="ln">“${esc(c.line)}”${c.st === 'taken' ? '<small>이미 선택된 파일입니다.</small>' : ''}</span></button>`).join('')}</div>
   <p class="btns"><button type="button" class="btn ghost" id="rf">새로고침</button></p>${outro(st.tester)}`;
   $('rf').onclick = () => load();
   app.querySelectorAll('.tst-card:not(.off)').forEach(b => b.onclick = async () => {
@@ -74,7 +74,7 @@ function cards(st, notice){
     app.querySelectorAll('.tst-card').forEach(x => x.disabled = true);
     try {
       const r = await rpc('test_pick', {p_token: token, p_key: b.dataset.k});
-      show(r.state, r.error === 'taken' ? '이미 선점되었습니다.' : r.error === 'dim' ? '선택할 수 없는 파일입니다.' : '');
+      show(r.state, r.error === 'taken' ? '이미 선택된 파일입니다.' : r.error === 'dim' ? '선택할 수 없는 파일입니다.' : '');
     } catch(x){ alert(x.message); load(); }
   });
 }
