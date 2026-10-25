@@ -1,10 +1,10 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261026b"><title>회원가입 · 태화여자고등학교</title></head><body>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261026c"><title>회원가입 · 태화여자고등학교</title></head><body>
 <div id="hd"></div>
 <section class="sv-top"><div class="wrap"><h1>회원 서비스</h1></div></section>
 <div class="crumb"><div class="wrap"><span>홈</span><span>›</span><b>회원가입</b></div></div>
 <div class="wrap sv one"><section class="pg"><div id="app"></div></section></div>
 <div id="ft"></div>
-<script src="config.js?v=20261026b"></script><script src="app.js?v=20261026b"></script><script src="layout.js?v=20261026b"></script>
+<script src="config.js?v=20261026c"></script><script src="app.js?v=20261026c"></script><script src="layout.js?v=20261026c"></script>
 <script>
 mount({});
 // 기초조사서. 보기는 서희지·한재희·이소록·정의현·배유림 순서로 적고, 화면에서는 섞어 보여 준다 (점수는 서버가 매긴다)
@@ -18,47 +18,58 @@ const SURVEY = [
 const LETTERS = "ABCDE";
 const $ = id => document.getElementById(id), app = $('app');
 const TESTER = location.hash === '#tester';
-let token = ""; try { token = localStorage.getItem('th_test') || ""; } catch(e){}
-function setToken(t){ token = t; try { t ? localStorage.setItem('th_test', t) : localStorage.removeItem('th_test'); } catch(e){} }
+// 진행 상황은 이 화면에만 들고 있다. 카드를 확정해야 서버에 기록이 남고, 그 전에 나가면 처음부터 다시 할 수 있다
+let me = null;   // {nick, tester, answers}
 function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
-const ERR = {closed:"현재 테스트가 진행 중입니다.", noreply:"등록된 이름이 없습니다.",
-  already:"이미 가입한 닉네임입니다. 처음 가입한 기기·브라우저에서 이어 주세요."};
-const outro = t => t ? '<p class="small muted" style="margin-top:18px">테스터 계정입니다. <a href="#" id="next" style="text-decoration:underline">다른 테스터로 하기</a> · <a href="#" id="relog" style="text-decoration:underline">이 테스터 기록 지우고 다시 하기</a></p>' : '';
+const ERR = {closed:"현재 테스트가 진행 중입니다.", noreply:"등록된 이름이 없습니다.", already:"이미 생존자 명부에 등록된 이름입니다."};
+function fail(r){
+  if(r.error === 'closed'){ closed(); return; }
+  if(r.error === 'noreply' || r.error === 'already'){ signup(ERR[r.error]); return; }
+  start();
+}
 
-function closed(){ app.innerHTML = '<div class="tst-wait"><p>현재 테스트가 진행 중입니다.</p></div>'; }
+function closed(){ me = null; app.innerHTML = '<div class="tst-wait"><p>현재 테스트가 진행 중입니다.</p></div>'; }
 
-function signup(){
+function signup(err){
+  me = null;
   app.innerHTML = `<h2 class="ttl">회원가입</h2>
   <form id="f" class="card tst-form" autocomplete="off">
   <div class="field"><label class="t" for="nick">이름</label><input type="text" id="nick" maxlength="20" required></div>
   <div class="checks"><label><input type="checkbox" id="agree"> <span>진행 자료에 자해, 가족 문제 등 민감한 소재가 포함되어 있음을 확인합니다.</span></label></div>
-    <div class="btns"><button class="btn dark" id="go" disabled>다음</button></div><div id="out"></div></form>`;
+    <div class="btns"><button class="btn dark" id="go" disabled>다음</button></div><div id="out">${err ? `<div class="msg err">${err}</div>` : ''}</div></form>`;
   $('agree').onchange = () => $('go').disabled = !$('agree').checked;
   $('f').addEventListener('submit', async e => {
     e.preventDefault(); $('out').innerHTML = '';
     $('go').disabled = true;
+    const nick = $('nick').value.trim();
     try {
-      const r = await rpc('test_signup', {p_nickname: $('nick').value});
-      if(!r.ok){ if(r.error === 'closed'){ closed(); return; } $('out').innerHTML = `<div class="msg err">${ERR[r.error] || '가입하지 못했습니다.'}</div>`; $('go').disabled = false; return; }
-      setToken(r.token); load();
+      const r = await rpc('test_check', {p_nickname: nick});
+      if(!r.ok){ if(r.error === 'closed'){ closed(); return; } $('out').innerHTML = `<div class="msg err">${ERR[r.error] || '확인하지 못했습니다.'}</div>`; $('go').disabled = false; return; }
+      me = {nick, tester: r.tester}; survey(); window.scrollTo(0, 0);
     } catch(x){ $('out').innerHTML = `<div class="msg err">${esc(x.message)}</div>`; $('go').disabled = false; }
   });
 }
 
-function survey(st){
+function survey(){
   app.innerHTML = `<article class="tst-paper"><h2>기초조사서</h2>
   <p class="tst-lead">개학 전 상담 자료로 쓰입니다. 정답은 없으니 가장 먼저 떠오르는 것을 고르세요. 제출한 뒤에는 수정할 수 없습니다.</p>
   <form id="sf">${SURVEY.map((q, qi) => `<fieldset class="tst-q"><legend>${qi + 1}. ${q[0]}</legend>
     ${shuffle(q[1].map((t, i) => [t, i])).map(([t, i]) => `<label><input type="radio" name="q${qi}" value="${i}" required> <span>${t}</span></label>`).join('')}</fieldset>`).join('')}
-  <div class="btns"><button class="btn dark" id="sb">제출</button></div><div id="out"></div></form></article>${outro(st.tester)}`;
+  <div class="btns"><button class="btn dark" id="sb">제출</button></div><div id="out"></div></form></article>`;
   $('sf').addEventListener('submit', async e => {
     e.preventDefault();
     if(!confirm('제출한 뒤에는 수정할 수 없습니다. 제출하시겠습니까?')) return;
     $('sb').disabled = true;
-    const ans = SURVEY.map((q, qi) => Number(document.querySelector(`input[name=q${qi}]:checked`).value));
-    try { show(await rpc('test_answer', {p_token: token, p_answers: ans})); window.scrollTo(0, 0); }
-    catch(x){ $('out').innerHTML = `<div class="msg err">${esc(x.message)}</div>`; $('sb').disabled = false; }
+    me.answers = SURVEY.map((q, qi) => Number(document.querySelector(`input[name=q${qi}]:checked`).value));
+    await loadCards(); window.scrollTo(0, 0);
   });
+}
+
+async function loadCards(notice){
+  try {
+    const r = await rpc('test_cards', {p_nickname: me.nick, p_answers: me.answers});
+    r.ok ? cards(r, notice) : fail(r);
+  } catch(x){ app.innerHTML = `<div class="msg err">${esc(x.message)}</div>`; }
 }
 
 function cards(st, notice){
@@ -67,40 +78,36 @@ function cards(st, notice){
   <p class="desc">${st.last ? '남아 있는 마지막 한 명입니다.' : '선택할 수 있는 파일 중 한 장을 고르세요. 고른 뒤에는 바꿀 수 없습니다.'}</p>
   <div class="tst-cards">${st.cards.map((c, i) => `<button type="button" class="tst-card${c.st === 'ok' ? '' : ' off'}" data-k="${esc(c.key)}" style="--c:${esc(c.color)}"${c.st === 'ok' ? '' : ' disabled'}>
     <span class="lt">${LETTERS[i]}</span><span class="chip"></span><span class="ln">“${esc(c.line)}”${c.st === 'taken' ? '<small>이미 선택된 파일입니다.</small>' : ''}</span></button>`).join('')}</div>
-  <p class="btns"><button type="button" class="btn ghost" id="rf">새로고침</button></p>${outro(st.tester)}`;
-  $('rf').onclick = () => load();
+  <p class="btns"><button type="button" class="btn ghost" id="rf">새로고침</button></p>`;
+  $('rf').onclick = () => loadCards();
   app.querySelectorAll('.tst-card:not(.off)').forEach(b => b.onclick = async () => {
     if(!confirm('이 카드로 확정하시겠습니까? 확정 후에는 바꿀 수 없습니다.')) return;
     app.querySelectorAll('.tst-card').forEach(x => x.disabled = true);
     try {
-      const r = await rpc('test_pick', {p_token: token, p_key: b.dataset.k});
-      show(r.state, r.error === 'taken' ? '이미 선택된 파일입니다.' : r.error === 'dim' ? '선택할 수 없는 파일입니다.' : '');
-    } catch(x){ alert(x.message); load(); }
+      const r = await rpc('test_pick', {p_nickname: me.nick, p_answers: me.answers, p_key: b.dataset.k});
+      if(r.ok) return done();
+      if(r.error === 'taken' || r.error === 'dim') return loadCards(r.error === 'taken' ? '이미 선택된 파일입니다.' : '선택할 수 없는 파일입니다.');
+      fail(r);
+    } catch(x){ alert(x.message); loadCards(); }
   });
 }
 
-function done(st){
-  app.innerHTML = `<div class="tst-wait"><p><b>생존자 명부에 등록되었습니다.</b></p><p class="muted">배정된 파일은 공개 후 로그인하여 확인할 수 있습니다.</p></div>${outro(st.tester)}`;
+function done(){
+  const t = me.tester, nick = me.nick;
+  app.innerHTML = `<div class="tst-wait"><p><b>생존자 명부에 등록되었습니다.</b></p><p class="muted">배정된 파일은 공개 후 로그인하여 확인할 수 있습니다.</p></div>` +
+    (t ? '<p class="small muted" style="margin-top:18px">테스터 계정입니다. <a href="#" id="next" style="text-decoration:underline">다른 테스터로 하기</a> · <a href="#" id="relog" style="text-decoration:underline">이 테스터 기록 지우고 다시 하기</a></p>' : '');
+  me = null;
+  if(!t) return;
+  $('next').onclick = e => { e.preventDefault(); e.stopPropagation(); signup(); };
+  $('relog').onclick = async e => { e.preventDefault(); e.stopPropagation(); try { await rpc('test_reset', {p_nickname: nick}); } catch(x){} signup(); };
 }
 
-function show(st, notice){
-  if(st.stage === 'none'){ setToken(''); return load(); }
-  if(st.stage === 'closed') closed();
-  else if(st.stage === 'survey') survey(st);
-  else if(st.stage === 'cards') cards(st, notice);
-  else done(st);
-  // 다른 테스터로: 이 기록은 그대로 두고 새로 가입 / 기록 지우기: 이 테스터의 답과 카드를 지운다
-  const nx = $('next'); if(nx) nx.onclick = e => { e.preventDefault(); e.stopPropagation(); setToken(''); signup(); };
-  const r = $('relog'); if(r) r.onclick = async e => { e.preventDefault(); e.stopPropagation(); try { await rpc('test_reset', {p_token: token}); } catch(x){} setToken(''); signup(); };
+async function start(){
+  try { (TESTER || (await rpc('test_status')).open) ? signup() : closed(); }
+  catch(x){ app.innerHTML = `<div class="msg err">${esc(x.message)}</div>`; }
 }
-
-async function load(){
-  try {
-    if(token) return show(await rpc('test_state', {p_token: token}));
-    if(TESTER) return signup();
-    (await rpc('test_status')).open ? signup() : closed();
-  } catch(x){ app.innerHTML = `<div class="msg err">${esc(x.message)}</div>`; }
-}
-load();
+// 예전 방식에서 남은 값 정리
+try { localStorage.removeItem('th_test'); } catch(e){}
+start();
 </script>
 </body></html>
