@@ -76,12 +76,29 @@ function sheet(m){
     <article class="tst-paper" style="border:0;box-shadow:none;margin:0;max-width:none;overflow-y:auto"><h2>기초조사서</h2>
     ${SURVEY.map((q, qi) => `<fieldset class="tst-q" disabled><legend>${qi + 1}. ${esc(q[0])}</legend>
       ${q[1].map((t, i) => `<label><input type="radio" ${m.answers[qi] === i ? 'checked' : ''}> <span>${esc(t)}</span></label>`).join('')}</fieldset>`).join('')}</article>
-    <div class="lp-ft"><span></span><button type="button">닫기 ✕</button></div></div>`;
+    <div class="lp-ft"><button type="button" data-save>이미지로 저장</button><button type="button" data-x>닫기 ✕</button></div></div>`;
   const close = () => { p.remove(); document.removeEventListener('keydown', key); }, key = e => { if(e.key === 'Escape') close(); };
-  p.querySelector('.lp-ft button').onclick = close;
+  p.querySelector('[data-x]').onclick = close;
+  p.querySelector('[data-save]').onclick = e => saveSheet(p.querySelector('.tst-paper'), m.nickname, e.target);
   p.addEventListener('click', e => { if(e.target === p) close(); });
   document.addEventListener('keydown', key);
   document.body.appendChild(p);
+}
+// 답안지를 PNG로 저장. 팝업은 스크롤로 잘려 있으므로 복제본을 화면 밖에 펼쳐 놓고 찍는다
+function saveSheet(paper, nick, btn){
+  btn.disabled = true; btn.textContent = '저장 중…';
+  const done = () => { btn.disabled = false; btn.textContent = '이미지로 저장'; };
+  const go = () => {
+    const c = paper.cloneNode(true); c.style.cssText = 'position:fixed;left:-10000px;top:0;width:720px;max-width:none;overflow:visible;border:0;box-shadow:none;margin:0';
+    c.querySelector('h2').insertAdjacentHTML('afterend', `<p class="tst-lead">이름: ${esc(nick)}</p>`);
+    document.body.appendChild(c);
+    html2canvas(c, {scale: 2, backgroundColor: '#fff'}).then(cv => {
+      const a = document.createElement('a'); a.download = `답안지_${nick}.png`; a.href = cv.toDataURL('image/png'); a.click();
+    }).catch(() => alert('이미지를 만들지 못했습니다.')).finally(() => { c.remove(); done(); });
+  };
+  if(window.html2canvas) return go();
+  const s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+  s.onload = go; s.onerror = () => { alert('이미지 저장 도구를 불러오지 못했습니다.'); done(); }; document.head.appendChild(s);
 }
 $('trows').addEventListener('click', async ev => {
   const s = ev.target.closest('button[data-a]'); if(s){ sheet(tdata.members.find(x => x.id === Number(s.dataset.a))); return; }
