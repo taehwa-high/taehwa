@@ -4,17 +4,9 @@
 <div class="crumb"><div class="wrap"><span>홈</span><span>›</span><b>회원가입</b></div></div>
 <div class="wrap sv one"><section class="pg"><div id="app"></div></section></div>
 <div id="ft"></div>
-<script src="config.js?v=20261026f"></script><script src="app.js?v=20261026f"></script><script src="layout.js?v=20261026h"></script>
+<script src="config.js?v=20261026f"></script><script src="app.js?v=20261026g"></script><script src="layout.js?v=20261026h"></script>
 <script>
 mount({});
-// 기초조사서. 보기는 서희지·한재희·이소록·정의현·배유림 순서로 적고, 화면에서는 섞어 보여 준다 (점수는 서버가 매긴다)
-const SURVEY = [
-  ["개학 날 아침, 교실에 도착해 가장 먼저 하는 일은?",
-    ["시간표를 확인하고 예습한다.","마음에 드는 자리에 앉아 엎드려 잔다.","적당한 뒷자리에 앉아 책을 읽는다.","아슬아슬하게 도착해 친구들과 떠든다.","체육복으로 갈아입는다."]],
-  ["가방에 물건 하나만 넣을 수 있다면?", ["문제집","크로키북","책","텅~","운동화"]],
-  ["숨기고 싶은 일을 누가 묻는다면?",
-    ["꺼져.","그런 거 없는데?","....","아, 배고파. 매점 갈 사람~","어... 그건 왜?"]]
-];
 const LETTERS = "ABCDE";
 const $ = id => document.getElementById(id), app = $('app');
 // 진행 상황은 이 화면에만 들고 있다. 카드를 확정해야 서버에 기록이 남고, 그 전에 나가면 처음부터 다시 할 수 있다

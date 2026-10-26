@@ -19,12 +19,12 @@
 <h2>캐릭터 테스트 · 파일 공개</h2>
 <p class="lead" id="tsum"></p>
 <p><button class="btn ghost" id="ttest"></button> <button class="btn ghost" id="tfile"></button></p>
-<div style="overflow-x:auto"><table class="list" style="min-width:560px"><thead><tr><th style="white-space:nowrap">닉네임</th><th>진행</th><th>캐릭터</th><th>확정 시각</th><th></th></tr></thead><tbody id="trows"></tbody></table></div>
+<div style="overflow-x:auto"><table class="list" style="min-width:560px"><thead><tr><th style="white-space:nowrap">닉네임</th><th>답안지</th><th>캐릭터</th><th>확정 시각</th><th></th></tr></thead><tbody id="trows"></tbody></table></div>
 <p class="muted" id="tnote"></p>
 <p class="muted">캐릭터 파일 로그인은 학번·비밀번호로 합니다. 이 창에서 <a href="login.html" style="text-decoration:underline">로그인 화면</a>으로 가면 공개 전에도 미리 볼 수 있습니다.</p>
 </div>
 </div></main>
-<script src="config.js?v=20261026f"></script><script src="app.js?v=20261026f"></script>
+<script src="config.js?v=20261026f"></script><script src="app.js?v=20261026g"></script>
 <script>
 const $ = id => document.getElementById(id);
 if(TH.PREVIEW) document.getElementById('pv').hidden = false;
@@ -56,7 +56,7 @@ function renderTest(t){
   $('tfile').textContent = t.file_open ? '파일 공개 멈추기' : '파일 공개하기';
   const chip = m => m.char ? `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${esc(m.color)};margin-right:6px"></span>${esc(m.char)}` : '';
   $('trows').innerHTML = t.members.length ? t.members.map(m => `<tr><td style="white-space:nowrap">${esc(m.nickname)}${m.tester ? ' <span class="muted small">(테스터)</span>' : ''}</td>
-    <td style="white-space:nowrap">${m.char ? '확정' : m.answered ? '카드 선택 중' : '기초조사서'}</td><td style="white-space:nowrap">${chip(m)}</td><td class="date">${m.picked_at ? fmt(m.picked_at) : ''}</td>
+    <td style="white-space:nowrap">${m.answers ? `<details><summary class="small">보기</summary><ol class="small" style="white-space:normal;margin:4px 0;padding-left:18px">${SURVEY.map((q, i) => `<li>${esc(q[0])}<br><b>${esc(q[1][m.answers[i]] ?? '-')}</b></li>`).join('')}</ol></details>` : ''}</td><td style="white-space:nowrap">${chip(m)}</td><td class="date">${m.picked_at ? fmt(m.picked_at) : ''}</td>
     <td style="white-space:nowrap"><button class="btn ghost" data-t="delete" data-id="${m.id}">삭제</button></td></tr>`).join('')
     : `<tr><td colspan="5" class="muted">아직 가입한 사람이 없습니다.</td></tr>`;
   $('tnote').textContent = '회신서 목록에 있는 이름만 참여할 수 있습니다. 5명이 모두 확정하면 테스트는 자동으로 닫힙니다.';
