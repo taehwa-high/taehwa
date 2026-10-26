@@ -13,7 +13,7 @@ const EMBLEM_L = '<img class="emb" src="images/emblem.png" width="640" height="6
 function header(sec){
   const gnb = MENUS.map(m => '<div class="m' + (m.t === sec ? ' on' : '') + '"><a href="' + m.href + '">' + m.t + '</a><div class="sub">' +
     m.items.map(i => '<a href="' + i[1] + '">' + i[0] + '</a>').join("") + '</div></div>').join("");
-  return '<div class="util"><div class="wrap"><div class="l"><a href="#" data-office>교직원</a><a href="#" class="pc" data-msg="학부모 알림 서비스는 개학 이후 다시 운영합니다.">학부모 알림 서비스</a></div><div class="r"><a href="login.html">로그인</a><a href="join.html">회원가입</a><a href="page.html#sitemap" class="pc">사이트맵</a></div></div></div>' +
+  return '<div class="util"><div class="wrap"><div class="l"><a href="#" data-office>교직원</a></div><div class="r"><a href="login.html">로그인</a><a href="join.html">회원가입</a><a href="page.html#sitemap" class="pc">사이트맵</a></div></div></div>' +
     '<div class="hd-main"><div class="wrap"><a class="logo" href="index.html">' + EMBLEM + '<span><b>태화여자고등학교</b><small>TAEHWA GIRLS\' HIGH SCHOOL</small></span></a>' +
     '<form class="search" id="gsearch"><input aria-label="검색어" placeholder="검색어를 입력하세요"><button>검색</button></form></div></div>' +
     '<nav class="gnb"><div class="wrap">' + gnb + '</div></nav>' +
