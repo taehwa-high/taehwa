@@ -56,7 +56,7 @@ function renderTest(t){
   $('tfile').textContent = t.file_open ? '파일 공개 멈추기' : '파일 공개하기';
   const chip = m => m.char ? `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${esc(m.color)};margin-right:6px"></span>${esc(m.char)}` : '';
   $('trows').innerHTML = t.members.length ? t.members.map(m => `<tr><td style="white-space:nowrap">${esc(m.nickname)}${m.tester ? ' <span class="muted small">(테스터)</span>' : ''}</td>
-    <td style="white-space:nowrap">${chip(m)}</td><td class="date">${m.picked_at ? fmt(m.picked_at) : ''}</td><td style="white-space:nowrap">${m.answers ? `<details><summary class="small">보기</summary><ol class="small" style="white-space:normal;margin:4px 0;padding-left:18px">${SURVEY.map((q, i) => `<li>${esc(q[0])}<br><b>${esc(q[1][m.answers[i]] ?? '-')}</b></li>`).join('')}</ol></details>` : ''}</td>
+    <td style="white-space:nowrap">${chip(m)}</td><td class="date">${m.picked_at ? fmt(m.picked_at) : ''}</td><td style="white-space:nowrap">${m.answers ? `<button class="btn ghost" data-a="${m.id}">답안지</button>` : ''}</td>
     <td style="white-space:nowrap"><button class="btn ghost" data-t="delete" data-id="${m.id}">삭제</button></td></tr>`).join('')
     : `<tr><td colspan="5" class="muted">아직 가입한 사람이 없습니다.</td></tr>`;
   $('tnote').textContent = '회신서 목록에 있는 이름만 참여할 수 있습니다. 5명이 모두 확정하면 테스트는 자동으로 닫힙니다.';
@@ -69,7 +69,22 @@ $('tfile').addEventListener('click', async () => {
   if(!tdata.file_open && !confirm('파일을 공개하면 학번·비밀번호로 로그인해서 생활기록부를 볼 수 있습니다. 공개할까요?')) return;
   try { renderTest(await rpc('office_test_set', {p_password: pw, p_key: 'file_open', p_value: !tdata.file_open})); } catch(e){ alert(e.message); }
 });
+// 답안지: 회원가입 때 본 기초조사서 화면 그대로, 고른 답만 표시해 팝업으로 연다
+function sheet(m){
+  const p = document.createElement('div'); p.className = 'lp'; p.setAttribute('role', 'dialog'); p.setAttribute('aria-label', m.nickname + ' 답안지');
+  p.innerHTML = `<div class="lp-box" style="max-width:720px;max-height:90vh;display:flex;flex-direction:column"><div class="lp-top"><span>답안지</span><small>${esc(m.nickname)}</small></div>
+    <article class="tst-paper" style="border:0;box-shadow:none;margin:0;max-width:none;overflow-y:auto"><h2>기초조사서</h2>
+    ${SURVEY.map((q, qi) => `<fieldset class="tst-q" disabled><legend>${qi + 1}. ${esc(q[0])}</legend>
+      ${q[1].map((t, i) => `<label><input type="radio" ${m.answers[qi] === i ? 'checked' : ''}> <span>${esc(t)}</span></label>`).join('')}</fieldset>`).join('')}</article>
+    <div class="lp-ft"><span></span><button type="button">닫기 ✕</button></div></div>`;
+  const close = () => { p.remove(); document.removeEventListener('keydown', key); }, key = e => { if(e.key === 'Escape') close(); };
+  p.querySelector('.lp-ft button').onclick = close;
+  p.addEventListener('click', e => { if(e.target === p) close(); });
+  document.addEventListener('keydown', key);
+  document.body.appendChild(p);
+}
 $('trows').addEventListener('click', async ev => {
+  const s = ev.target.closest('button[data-a]'); if(s){ sheet(tdata.members.find(x => x.id === Number(s.dataset.a))); return; }
   const b = ev.target.closest('button[data-t]'); if(!b) return;
   const m = tdata.members.find(x => x.id === Number(b.dataset.id)), act = b.dataset.t; let val = null;
   if(act === 'delete' && !confirm(`${m.nickname} 기록을 삭제할까요? 고른 카드는 다시 남은 카드로 돌아가고, 이 이름으로 처음부터 다시 할 수 있습니다.`)) return;
