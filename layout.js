@@ -35,7 +35,7 @@ function toast(msg){
 function boardRows(items, withBadge){
   const total = items.length;
   return items.map((n, i) => '<tr' + (n.pin ? ' class="pin"' : '') + '><td class="num">' + (n.pin ? '<span class="badge">공지</span>' : (total - i)) + '</td>' +
-    '<td class="tl"><a href="' + (n.link || ('view.html#' + n.id)) + '">' + n.t + '</a>' + (n.id === 'l1' ? '<span class="new">N</span>' : '') + '</td>' +
+    '<td class="tl"><a href="' + (n.link || ('view.html#' + n.id)) + '">' + n.t + '</a>' + (n.nw ? '<span class="new">N</span>' : '') + '</td>' +
     '<td class="who">' + n.w + '</td><td class="dt">' + n.d + '</td><td class="hit">' + n.h + '</td></tr>').join("");
 }
 function openOffice(){
