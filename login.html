@@ -45,7 +45,7 @@ function record(st){
   <table class="rec-t"><tbody>${info.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${v ? nl(v) : ''}</td></tr>`).join('')}</tbody></table>
   ${(r.subs || []).map(s => `<h4>${esc(s.t)}</h4><table class="rec-t rec-sub"><tbody><tr><td class="rec-v">${s.v ? nlsp(s.v) : ''}</td></tr></tbody></table>`).join('')}
   ${secs.map((s, i) => `<h3>${i + 2}. ${esc(s.t)}</h3>` + (s.rows
-    ? `<table class="rec-t rec-grid"><thead><tr>${s.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${s.rows.map(r => `<tr>${r.map(c => `<td>${nl(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`
+    ? `<table class="rec-t rec-grid"><thead><tr>${s.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${s.rows.map(r => `<tr>${r.map(c => `<td>${nl(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>${s.memo ? `<p class="rec-memo">${nl(s.memo)}</p>` : ''}`
     : `<table class="rec-t"><tbody><tr><td class="rec-v">${s.v ? nl(s.v) : '<span class="muted">해당 사항 없음</span>'}</td></tr></tbody></table>`)).join('')}
   <div class="rec-sign"><span>위 사실을 증명합니다.</span><span>태화여자고등학교장</span></div>
   </article>${logout}`;
