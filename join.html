@@ -77,7 +77,7 @@ function cards(st, notice){
     try {
       const r = await rpc('test_pick', {p_nickname: me.nick, p_answers: me.answers, p_key: b.dataset.k});
       if(r.ok) return done();
-      if(r.error === 'notallowed'){ alert('선택할 수 없는 파일입니다. 다른 파일을 골라 주세요.'); return loadCards(); }
+      if(r.error === 'notallowed'){ alert('안 돼. 돌아가.'); return loadCards(); }
       if(r.error === 'taken' || r.error === 'dim') return loadCards(r.error === 'taken' ? '이미 선택된 파일입니다.' : '선택할 수 없는 파일입니다.');
       fail(r);
     } catch(x){ alert(x.message); loadCards(); }
