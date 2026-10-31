@@ -13,6 +13,13 @@ let cred = null; try { cred = JSON.parse(sessionStorage.getItem('th_rec') || 'nu
 function setCred(c){ cred = c; try { c ? sessionStorage.setItem('th_rec', JSON.stringify(c)) : sessionStorage.removeItem('th_rec'); } catch(e){} }
 function office(){ try { return sessionStorage.getItem('th_pw') || null; } catch(e){ return null; } }
 const nl = s => esc(s).replace(/\n/g, '<br>');
+// 서사의 "소록: 대사" / "(재희: 대사)" / "(의현) "대사"" 표기를 라벨 없이 인물 색으로 바꾼다
+const SP = {재희: '#A32121', 소록: '#1F4D26', 희지: '#ED64BE', 의현: '#FFD900', 유림: '#1A3470'};
+const spk = (n, t) => `<span class="sp${n === '의현' ? ' sp-y' : ''}" style="color:${SP[n]}">${t}</span>`;
+const nlsp = s => nl(s)
+  .replace(/(^|<br>)(재희|소록|희지|의현|유림): (.*?)(?=<br>|$)/g, (m, b, n, t) => b + spk(n, t))
+  .replace(/\((재희|소록|희지|의현|유림): ([^)]*)\)/g, (m, n, t) => spk(n, t))
+  .replace(/\((의현)\) (&quot;.*?&quot;)/g, (m, n, t) => spk(n, t));
 const logout = '<p class="btns"><button class="btn ghost" id="lo">로그아웃</button></p>';
 
 function form(err){
@@ -34,7 +41,7 @@ function record(st){
   ${(r.notice || []).length ? `<div class="rec-notice"><b>${esc(r.notice[0])}</b>${r.notice.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>` : ''}
   <h3>1. 인적·학적사항</h3>
   <table class="rec-t"><tbody>${info.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${v ? nl(v) : ''}</td></tr>`).join('')}</tbody></table>
-  ${(r.subs || []).map(s => `<h4>${esc(s.t)}</h4><table class="rec-t rec-sub"><tbody><tr><td class="rec-v">${s.v ? nl(s.v) : ''}</td></tr></tbody></table>`).join('')}
+  ${(r.subs || []).map(s => `<h4>${esc(s.t)}</h4><table class="rec-t rec-sub"><tbody><tr><td class="rec-v">${s.v ? nlsp(s.v) : ''}</td></tr></tbody></table>`).join('')}
   ${secs.map((s, i) => `<h3>${i + 2}. ${esc(s.t)}</h3>` + (s.rows
     ? `<table class="rec-t rec-grid"><thead><tr>${s.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${s.rows.map(r => `<tr>${r.map(c => `<td>${nl(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`
     : `<table class="rec-t"><tbody><tr><td class="rec-v">${s.v ? nl(s.v) : '<span class="muted">해당 사항 없음</span>'}</td></tr></tbody></table>`)).join('')}
