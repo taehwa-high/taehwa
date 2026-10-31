@@ -13,7 +13,7 @@ const EMBLEM_L = '<img class="emb" src="images/emblem.png" width="640" height="6
 function header(sec){
   const gnb = MENUS.map(m => '<div class="m' + (m.t === sec ? ' on' : '') + '"><a href="' + m.href + '">' + m.t + '</a><div class="sub">' +
     m.items.map(i => '<a href="' + i[1] + '">' + i[0] + '</a>').join("") + '</div></div>').join("");
-  return '<div class="util"><div class="wrap"><div class="l"><a href="#" data-office>교직원</a></div><div class="r"><a href="login.html">로그인</a><a href="join.html">회원가입</a><a href="page.html#sitemap" class="pc">사이트맵</a></div></div></div>' +
+  return '<div class="util"><div class="wrap"><div class="l"><a href="#" data-office>교직원</a></div><div class="r"><a href="login.html" id="auth">로그인</a><a href="join.html">회원가입</a><a href="page.html#sitemap" class="pc">사이트맵</a></div></div></div>' +
     '<div class="hd-main"><div class="wrap"><a class="logo" href="index.html">' + EMBLEM + '<span><b>태화여자고등학교</b><small>TAEHWA GIRLS\' HIGH SCHOOL</small></span></a>' +
     '<form class="search" id="gsearch"><input aria-label="검색어" placeholder="검색어를 입력하세요"><button>검색</button></form></div></div>' +
     '<nav class="gnb"><div class="wrap">' + gnb + '</div></nav>' +
@@ -68,11 +68,20 @@ function openOffice(){
   m.querySelector('#pwm-in').value = ''; m.querySelector('#pwm-err').textContent = '';
   m.classList.add('on'); setTimeout(() => m.querySelector('#pwm-in').focus(), 30);
 }
+// 로그인 중(th_rec)이면 상단 [로그인]을 [로그아웃]으로 바꾼다
+function authLink(){
+  const a = document.getElementById('auth'); if(!a) return;
+  let on = false; try{ on = !!sessionStorage.getItem('th_rec'); }catch(e){}
+  a.textContent = on ? '로그아웃' : '로그인'; a.toggleAttribute('data-logout', on);
+}
 function mount(opts){
   const hd = document.getElementById('hd'); if(hd) hd.innerHTML = header(opts.sec);
   const ft = document.getElementById('ft'); if(ft) ft.innerHTML = footer();
   const l = document.getElementById('lnb'); if(l) l.innerHTML = lnb(opts.sec, opts.active);
+  authLink();
   document.addEventListener('click', e => {
+    const o = e.target.closest('[data-logout]');
+    if(o){ e.preventDefault(); try{ sessionStorage.removeItem('th_rec'); }catch(x){} location.href = 'login.html'; return; }
     const a = e.target.closest('a[href="#"], [data-msg], [data-office]');
     if(a && a.hasAttribute('data-office')){ e.preventDefault(); openOffice(); return; }
     if(a){ e.preventDefault(); toast(a.dataset.msg || '개학 준비 기간에는 이용할 수 없습니다.'); }
