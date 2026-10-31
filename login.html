@@ -25,15 +25,19 @@ function form(err){
   $('f').addEventListener('submit', e => { e.preventDefault(); login({no: $('no').value.trim(), pw: toEng($('pw').value)}, true); });
 }
 
-// 학교생활기록부 형식. record = {info:[[항목, 값]...], sections:[{t:제목, v:내용}...]}
+// 학교생활기록부 형식. record = {notice:[안내 문구...], info:[[항목, 값]...], subs:[{t:소제목, v:내용}...](1번 항목 아래), sections:[{t:제목, v:내용} 또는 표 {t, head:[열 제목...], rows:[[칸...]...]}...]}
 function record(st){
   $('bc').textContent = '학교생활기록부';
   const r = st.record || {}, info = [['학번', st.no], ['성명', st.name]].concat(r.info || []), secs = r.sections || [];
   app.innerHTML = `<article class="rec">
   <header class="rec-head"><span class="rec-kind">학 교 생 활 기 록 부</span><b>태화여자고등학교</b></header>
-  <h3>1. 인적사항</h3>
+  ${(r.notice || []).length ? `<div class="rec-notice"><b>${esc(r.notice[0])}</b>${r.notice.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>` : ''}
+  <h3>1. 인적·학적사항</h3>
   <table class="rec-t"><tbody>${info.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${v ? nl(v) : ''}</td></tr>`).join('')}</tbody></table>
-  ${secs.map((s, i) => `<h3>${i + 2}. ${esc(s.t)}</h3><table class="rec-t"><tbody><tr><td class="rec-v">${s.v ? nl(s.v) : '<span class="muted">해당 사항 없음</span>'}</td></tr></tbody></table>`).join('')}
+  ${(r.subs || []).map(s => `<h4>${esc(s.t)}</h4><table class="rec-t rec-sub"><tbody><tr><td class="rec-v">${s.v ? nl(s.v) : ''}</td></tr></tbody></table>`).join('')}
+  ${secs.map((s, i) => `<h3>${i + 2}. ${esc(s.t)}</h3>` + (s.rows
+    ? `<table class="rec-t rec-grid"><thead><tr>${s.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${s.rows.map(r => `<tr>${r.map(c => `<td>${nl(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`
+    : `<table class="rec-t"><tbody><tr><td class="rec-v">${s.v ? nl(s.v) : '<span class="muted">해당 사항 없음</span>'}</td></tr></tbody></table>`)).join('')}
   <div class="rec-sign"><span>위 사실을 증명합니다.</span><span>태화여자고등학교장</span></div>
   </article>${logout}`;
   $('lo').onclick = () => { setCred(null); form(); };

@@ -456,6 +456,14 @@ footer.ft .in img.emb{width:56px;height:56px;flex:none}
 .rec-kind{display:block;font-family:var(--serif);font-size:26px;font-weight:700;letter-spacing:.1em}
 .rec-head b{display:block;color:#555;font-weight:400;margin-top:4px}
 .rec h3{font-size:15px;margin:22px 0 6px}
+.rec h4{font-size:14px;margin:16px 0 4px;padding-left:8px;border-left:3px solid #333}
+.rec-grid thead th{width:auto;text-align:center;background:#e7e7e4}
+.rec-grid td{line-height:1.7}
+.rec-grid td:first-child{white-space:nowrap;background:#f7f7f5}
+.rec-sub .rec-v{padding:12px 14px;line-height:1.9}
+.rec-notice{border:1px solid #333;padding:12px 14px;margin-bottom:6px;line-height:1.7}
+.rec-notice b{display:block;font-size:16px}
+.rec-notice p{margin:2px 0 0;color:#555}
 .rec-t{width:100%;border-collapse:collapse;border-top:2px solid #333}
 .rec-t th,.rec-t td{border:1px solid #999;padding:8px 10px;vertical-align:top;text-align:left;word-break:keep-all;overflow-wrap:anywhere}
 .rec-t th{width:120px;background:#f1f1ef;font-weight:500;white-space:nowrap}
