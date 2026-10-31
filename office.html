@@ -54,7 +54,7 @@ function renderTest(t){
   $('tsum').textContent = `테스트 ${t.test_open ? '열림' : '닫힘'} · 파일 ${t.file_open ? '공개 중' : '비공개'} · 가입 ${real.length}명 · 확정 ${picked.length}/${t.chars.length}명`;
   $('ttest').textContent = t.test_open ? '테스트 닫기' : '테스트 열기 (선착순)';
   $('tfile').textContent = t.file_open ? '파일 공개 멈추기' : '파일 공개하기';
-  const chip = m => m.char ? `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${esc(m.color)};margin-right:6px"></span>${esc(m.char)}` : '';
+  const chip = m => m.char ? `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${esc(m.color)};margin-right:6px"></span><a href="login.html#as=${encodeURIComponent(m.char)}" style="text-decoration:underline" title="생활기록부 보기">${esc(m.char)}</a>` : '';
   $('trows').innerHTML = t.members.length ? t.members.map(m => `<tr><td style="white-space:nowrap">${esc(m.nickname)}${m.tester ? ' <span class="muted small">(테스터)</span>' : ''}</td>
     <td style="white-space:nowrap">${chip(m)}</td><td class="date">${m.picked_at ? fmt(m.picked_at) : ''}</td><td style="white-space:nowrap">${m.answers ? `<button class="btn ghost" data-a="${m.id}">답안지</button>` : ''}</td>
     <td style="white-space:nowrap"><button class="btn ghost" data-t="delete" data-id="${m.id}">삭제</button></td></tr>`).join('')

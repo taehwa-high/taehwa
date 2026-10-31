@@ -64,6 +64,9 @@ async function login(c, typed){
     form(st.stage === 'notyet' ? '배정된 파일은 아직 공개되지 않았습니다.' : typed ? '학번 또는 비밀번호가 맞지 않습니다.' : '');
   } catch(x){ form(esc(x.message)); }
 }
-cred ? login(cred) : form();
+// 교무실에서 캐릭터 이름을 눌러 들어오면 학번·비밀번호 없이 그 생활기록부를 바로 연다
+const as = location.hash.startsWith('#as=') ? decodeURIComponent(location.hash.slice(4)) : '', op = office();
+if(as && op) rpc('office_file', {p_password: op, p_name: as}).then(st => { record(st); window.scrollTo(0, 0); }, x => form(esc(x.message)));
+else cred ? login(cred) : form();
 </script>
 </body></html>
