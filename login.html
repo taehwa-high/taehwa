@@ -15,11 +15,11 @@ function office(){ try { return sessionStorage.getItem('th_pw') || null; } catch
 const nl = s => esc(s).replace(/\n/g, '<br>');
 // 서사의 "소록: 대사" / "(재희: 대사)" / "(의현) "대사"" 표기를 라벨 없이 인물 색으로 바꾼다
 const SP = {재희: '#A32121', 소록: '#2A8A3E', 희지: '#ED64BE', 의현: '#FFD900', 유림: '#1A3470', 남우혜: '#8B5A2B'};
-const GRAY = '#7a7a7a';  // 색이 정해지지 않은 화자(남우선 등)
+const GRAY = '#7a7a7a';  // 색이 정해지지 않은 화자(남우선·엄마·기타)
 const spk = (n, t) => `<span class="sp${n === '의현' ? ' sp-y' : ''}" style="color:${SP[n] || GRAY}">${t}</span>`;
 const nlsp = s => nl(s)
-  .replace(/(^|<br>)(재희|소록|희지|의현|유림|남우혜|남우선): (.*?)(?=<br>|$)/g, (m, b, n, t) => b + spk(n, t))
-  .replace(/\((재희|소록|희지|의현|유림|남우혜|남우선): ([^)]*)\)/g, (m, n, t) => spk(n, t))
+  .replace(/(^|<br>)(재희|소록|희지|의현|유림|남우혜|남우선|엄마|기타): (.*?)(?=<br>|$)/g, (m, b, n, t) => b + spk(n, t))
+  .replace(/\((재희|소록|희지|의현|유림|남우혜|남우선|엄마|기타): ([^)]*)\)/g, (m, n, t) => spk(n, t))
   .replace(/\((의현)\) (&quot;.*?&quot;)/g, (m, n, t) => spk(n, t))
   .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
 const logout = '<p class="btns"><button class="btn ghost" id="lo">로그아웃</button></p>';
