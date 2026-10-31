@@ -15,7 +15,7 @@
 <section class="news"><div class="wrap"><div class="panel"><h3>학교 소식 <a href="page.html#news">더보기 +</a></h3></div><div class="note" style="margin:0">준비 중입니다.</div></div></section>
 <section class="greet" id="greet"><div class="wrap"><div class="em"></div><div><h3>학교장 인사말</h3><p>길고 어려운 시간을 지나 태화시에 다시 일상이 찾아왔습니다. 태화여자고등학교는 학생들이 안전하게 교실로 돌아올 수 있도록 개학을 준비하고 있습니다.</p><p>10월 31일, 태화여고가 다시 개화합니다. 학교를 지켜 주신 학부모님과 지역 주민께 감사드립니다.</p><p class="muted">태화여자고등학교장</p></div></div></section>
 <div id="ft"></div>
-<script src="config.js?v=20261026f"></script><script src="app.js?v=20261026g"></script><script src="notices.js?v=20261026g"></script><script src="layout.js?v=20261026i"></script>
+<script src="config.js?v=20261026f"></script><script src="app.js?v=20261026g"></script><script src="notices.js?v=20261030a"></script><script src="layout.js?v=20261026i"></script>
 <script>mount({sec:""});
 document.querySelector('.greet .em').innerHTML = EMBLEM_L;
 const slides=[...document.querySelectorAll('.slide')], dots=[...document.querySelectorAll('#dots i')]; let si=0, st;
@@ -31,16 +31,16 @@ list('n');
   for(let i=0;i<first;i++){h+='<td></td>';c++}
   for(let d=1;d<=days;d++){ const w=c%7; let cl=w===0?'sun':w===6?'sat':''; if(d>=26&&d<=31) cl+=' ev'; if(d===28) cl+=' today'; h+='<td class="'+cl+'">'+d+'</td>'; c++; if(c%7===0&&d<days) h+='</tr><tr>'; }
   while(c%7){h+='<td></td>';c++} document.getElementById('ct').innerHTML=h+'</tr>'; })();
-// 접속하자마자 뜨는 회원가입 오픈 팝업 (오늘 하루 보지 않기)
+// 접속하자마자 뜨는 로그인 오픈 팝업 (오늘 하루 보지 않기)
 (function(){
-  const KEY='th_popup_join_hide'; let hide=false;
+  const KEY='th_popup_login_hide'; let hide=false;
   try{ hide = localStorage.getItem(KEY) === new Date().toDateString(); }catch(e){}
   if(hide) return;
-  const m=document.createElement('div'); m.className='lp'; m.setAttribute('role','dialog'); m.setAttribute('aria-label','회원가입 오픈 안내');
-  m.innerHTML='<div class="lp-box"><div class="lp-top"><span>공지사항</span><small>교무부 · 2033. 10. 28.</small></div>'+
-    '<div class="lp-body">'+EMBLEM+'<div class="lp-txt"><h4>홈페이지 회원가입 오픈</h4>'+
-    '<p>회신서를 제출한 학생은 지금 가입할 수 있습니다.</p><p class="s">회신서에 적은 이름 그대로<br>가입해 주시기 바랍니다.</p></div>'+
-    '<a class="btn" href="join.html">회원가입 하기</a></div>'+
+  const m=document.createElement('div'); m.className='lp'; m.setAttribute('role','dialog'); m.setAttribute('aria-label','로그인 이용 안내');
+  m.innerHTML='<div class="lp-box"><div class="lp-top"><span>공지사항</span><small>교무부 · 2033. 10. 30.</small></div>'+
+    '<div class="lp-body">'+EMBLEM+'<div class="lp-txt"><h4>홈페이지 로그인 이용 안내</h4>'+
+    '<p>회원가입을 마친 학생은 지금 로그인할 수 있습니다.</p><p class="s">상단의 [로그인] 메뉴에서<br>학번과 비밀번호를 입력해 주십시오.</p></div>'+
+    '<a class="btn" href="login.html">로그인 하기</a></div>'+
     '<div class="lp-ft"><label><input type="checkbox" id="lp-chk"> 오늘 하루 보지 않기</label><button type="button" id="lp-x">닫기 ✕</button></div></div>';
   document.body.appendChild(m);
   const close=()=>{ try{ if(document.getElementById('lp-chk').checked) localStorage.setItem(KEY,new Date().toDateString()); }catch(e){} m.remove(); };
