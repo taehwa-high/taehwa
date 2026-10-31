@@ -20,7 +20,8 @@ const spk = (n, t) => `<span class="sp${n === '의현' ? ' sp-y' : ''}" style="c
 const nlsp = s => nl(s)
   .replace(/(^|<br>)(재희|소록|희지|의현|유림|남우혜|남우선): (.*?)(?=<br>|$)/g, (m, b, n, t) => b + spk(n, t))
   .replace(/\((재희|소록|희지|의현|유림|남우혜|남우선): ([^)]*)\)/g, (m, n, t) => spk(n, t))
-  .replace(/\((의현)\) (&quot;.*?&quot;)/g, (m, n, t) => spk(n, t));
+  .replace(/\((의현)\) (&quot;.*?&quot;)/g, (m, n, t) => spk(n, t))
+  .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
 const logout = '<p class="btns"><button class="btn ghost" id="lo">로그아웃</button></p>';
 
 function form(err){
