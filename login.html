@@ -22,6 +22,8 @@ const nlsp = s => nl(s)
   .replace(/\((재희|소록|희지|의현|유림|남우혜|남우선|엄마|기타): ([^)]*)\)/g, (m, n, t) => spk(n, t))
   .replace(/\((의현)\) (&quot;.*?&quot;)/g, (m, n, t) => spk(n, t))
   .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+// 나의 문장: 굵게 + 담당 인물 색 (이름 끝 두 글자가 SP의 키)
+const motto = (v, name) => { const n = String(name || '').slice(-2); return `<b class="sp${n === '의현' ? ' sp-y' : ''}" style="color:${SP[n] || GRAY}">${esc(v)}</b>`; };
 const logout = '<p class="btns"><button class="btn ghost" id="lo">로그아웃</button></p>';
 
 function form(err){
@@ -42,7 +44,7 @@ function record(st){
   <header class="rec-head"><span class="rec-kind">학 교 생 활 기 록 부</span><b>태화여자고등학교</b></header>
   ${(r.notice || []).length ? `<div class="rec-notice"><b>${esc(r.notice[0])}</b>${r.notice.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}</div>` : ''}
   <h3>1. 인적·학적사항</h3>
-  <table class="rec-t"><tbody>${info.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${v ? nl(v) : ''}</td></tr>`).join('')}</tbody></table>
+  <table class="rec-t"><tbody>${info.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${k === '나의 문장' ? motto(v, st.name) : v ? nl(v) : ''}</td></tr>`).join('')}</tbody></table>
   ${(r.subs || []).map(s => `<h4>${esc(s.t)}</h4><table class="rec-t rec-sub"><tbody><tr><td class="rec-v">${s.v ? nlsp(s.v) : ''}</td></tr></tbody></table>`).join('')}
   ${secs.map((s, i) => `<h3>${i + 2}. ${esc(s.t)}</h3>` + (s.rows
     ? `<table class="rec-t rec-grid"><thead><tr>${s.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${s.rows.map(r => `<tr>${r.map(c => `<td>${nl(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>${s.memo ? `<p class="rec-memo">${nl(s.memo)}</p>` : ''}`
