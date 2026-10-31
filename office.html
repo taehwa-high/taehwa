@@ -24,7 +24,7 @@
 <p class="muted">캐릭터 파일 로그인은 학번·비밀번호로 합니다. 이 창에서 <a href="login.html" style="text-decoration:underline">로그인 화면</a>으로 가면 공개 전에도 미리 볼 수 있습니다.</p>
 </div>
 </div></main>
-<script src="config.js?v=20261026f"></script><script src="app.js?v=20261026g"></script>
+<script src="config.js?v=20261101a"></script><script src="app.js?v=20261026g"></script>
 <script>
 const $ = id => document.getElementById(id);
 if(TH.PREVIEW) document.getElementById('pv').hidden = false;
@@ -122,7 +122,7 @@ $('rows').addEventListener('click', async ev => {
 $('toggle').addEventListener('click', async () => {
   try { await rpc('office_set_open', {p_password: pw, p_open: !data.status.open}); await load(); } catch(e){ alert(e.message); }
 });
-$('ad').innerHTML = TH.CANDIDATE_DATES.map(d => `<label><input type="checkbox" name="ad" value="${esc(d)}" checked> <span>${esc(d)}</span></label>`).join('');
+$('ad').innerHTML = TH.CANDIDATE_DATES.map(d => `<label><input type="checkbox" name="ad" value="${esc(d)}"> <span>${esc(d)}</span></label>`).join('');
 $('af').addEventListener('submit', async ev => {
   ev.preventDefault(); $('aout').innerHTML = "";
   const nick = $('an').value.trim(), dates = [...document.querySelectorAll('input[name=ad]:checked')].map(x => x.value);
