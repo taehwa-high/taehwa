@@ -1,12 +1,30 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261026f"><title>교무실 · 태화여자고등학교</title></head><body>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="preload" href="fonts/WantedSansVariable.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css?v=20261026f"><title>교무실 · 태화여자고등학교</title>
+<style>
+.otabs{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 24px;border-bottom:2px solid var(--pri)}
+.otabs button{padding:10px 18px;border:1px solid var(--line);border-bottom:0;border-radius:6px 6px 0 0;background:#f3f5f4;font:inherit;font-size:15px;cursor:pointer;color:inherit}
+.otabs button[aria-selected=true]{background:var(--pri);border-color:var(--pri);color:#fff}
+.gwrap{overflow-x:auto;margin:0 0 28px}
+table.gm{width:100%;min-width:640px;border-collapse:collapse;border-top:2px solid var(--pri);font-size:14px;line-height:1.55}
+table.gm th,table.gm td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+table.gm th{background:#f3f5f4;font-weight:500;white-space:nowrap}
+table.gm td.n{white-space:nowrap;color:#555}
+table.gm td.truth{background:#fff5e0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.chips button{padding:6px 12px;border:1px solid var(--line);border-radius:99px;background:#fff;font:inherit;font-size:14px;cursor:pointer;color:inherit}
+.chips button[aria-pressed=true]{background:var(--pri);border-color:var(--pri);color:#fff}
+</style></head><body>
 <header class="site"><div class="wrap"><a class="brand" href="index.html">태화여자고등학교<small>교무실 · 관리자 전용</small></a></div></header>
 <main><div class="wrap">
-<h1>회신서 관리</h1>
+<h1 id="ttl">회신서 관리</h1>
 
 <div id="login" class="card" style="max-width:420px">
 <form id="lf"><div class="field"><label class="t" for="pw">교무실 비밀번호</label><input type="password" id="pw" required></div><button class="btn dark">열기</button><div id="lout"></div></form>
 </div>
 <div id="panel" hidden>
+<nav class="otabs" role="tablist"><button type="button" role="tab" data-v="reply" aria-selected="true">회신서 관리</button><button type="button" role="tab" data-v="ev" aria-selected="false">증거 목록</button><button type="button" role="tab" data-v="tl" aria-selected="false">사건 타임라인</button></nav>
+<div data-view="ev" id="v-ev" hidden></div>
+<div data-view="tl" id="v-tl" hidden></div>
+<div data-view="reply">
 <p class="lead" id="summary"></p>
 <p><button class="btn ghost" id="reload">새로고침</button> <button class="btn ghost" id="toggle"></button> <button class="btn ghost" id="logout">잠그기</button></p>
 <h2>참석 일시 집계</h2><div class="tally" id="tally"></div>
@@ -22,6 +40,7 @@
 <div style="overflow-x:auto"><table class="list" style="min-width:560px"><thead><tr><th style="white-space:nowrap">닉네임</th><th>캐릭터</th><th>확정 시각</th><th>답안지</th><th></th></tr></thead><tbody id="trows"></tbody></table></div>
 <p class="muted" id="tnote"></p>
 <p class="muted">캐릭터 파일 로그인은 학번·비밀번호로 합니다. 이 창에서 <a href="login.html" style="text-decoration:underline">로그인 화면</a>으로 가면 공개 전에도 미리 볼 수 있습니다.</p>
+</div>
 </div>
 </div></main>
 <script src="config.js?v=20261101a"></script><script src="app.js?v=20261105"></script>
@@ -133,6 +152,39 @@ $('af').addEventListener('submit', async ev => {
 });
 $('reload').addEventListener('click', () => load().catch(e => alert(e.message)));
 $('logout').addEventListener('click', () => { try { sessionStorage.removeItem('th_pw'); } catch(e){} location.reload(); });
+// 교무실 메뉴. 증거 목록·사건 타임라인은 GM 전용이라 페이지에 적지 않고 암호로 서버에서 받아 온다
+const TABS = {reply: '회신서 관리', ev: '증거 목록', tl: '사건 타임라인'};
+let gm = null, who = '';
+document.querySelector('.otabs').addEventListener('click', async ev => {
+  const b = ev.target.closest('button[data-v]'); if(!b) return;
+  const k = b.dataset.v;
+  document.querySelectorAll('.otabs button').forEach(x => x.setAttribute('aria-selected', x === b));
+  document.querySelectorAll('[data-view]').forEach(v => v.hidden = v.dataset.view !== k);
+  $('ttl').textContent = TABS[k];
+  if(k !== 'reply' && !gm){
+    $('v-' + k).innerHTML = '<p class="muted">불러오는 중…</p>';
+    try { gm = await rpc('office_gm', {p_password: pw}); renderEv(); renderTl(); }
+    catch(e){ $('v-' + k).innerHTML = `<div class="msg err">${esc(e.message)}</div>`; }
+  }
+});
+const tbl = (head, rows) => `<div class="gwrap"><table class="gm"><thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
+function renderEv(){
+  const e = gm.evidence;
+  $('v-ev').innerHTML = `<p class="lead">지목 덱 ${e.deck.reduce((a, d) => a + d.rows.length, 0)}개 · 현장 탐사 ${e.scene.reduce((a, s) => a + s.rows.length, 0)}개 · 몸수색 ${e.body.length}명. 범인은 배유림.</p>` +
+    '<h2>지목 덱</h2><p class="muted">지목받을 때마다 번호 순서대로 한 장씩 나간다. 뒤 번호일수록 결정적이다.</p>' +
+    e.deck.map(d => `<h3>${esc(d.who)}</h3>` + tbl(['번호', '증거', '가리키는 것'], d.rows.map(r => `<tr><td class="n">${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join(''))).join('') +
+    '<h2>현장 탐사</h2>' +
+    e.scene.map(s => `<h3>${esc(s.place)}</h3>` + tbl(['번호', '증거', '관련 인물', '겉으로 가리키는 것', '진실'], s.rows.map(r => `<tr><td class="n">${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td class="truth">${esc(r[4])}</td></tr>`).join(''))).join('') +
+    '<h2>몸수색</h2>' + tbl(['대상', '드러나는 것', '효과'], e.body.map(r => `<tr><td class="n">${esc(r[0])}</td><td>${esc(r[1])}</td><td class="truth">${esc(r[2])}</td></tr>`).join(''));
+}
+function renderTl(){
+  const names = ['우혜', '희지', '재희', '소록', '의현', '유림'];
+  const rows = gm.timeline.filter(r => !who || r[1].includes(who) || r[1].includes('전원'));
+  $('v-tl').innerHTML = '<p class="lead">10/30 상담 호출부터 10/31 08:00 시신 발견까지. 캐릭터 파일 기준.</p>' +
+    `<div class="chips">${['', ...names].map(n => `<button type="button" data-who="${n}" aria-pressed="${n === who}">${n || '전체'}</button>`).join('')}</div>` +
+    tbl(['시각', '인물', '장소', '한 일', '교차 확인 · 증거'], rows.map(r => `<tr><td class="n">${esc(r[0])}</td><td class="n">${r[1].map(esc).join('·')}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td>${esc(r[4])}</td></tr>`).join(''));
+}
+$('v-tl').addEventListener('click', ev => { const b = ev.target.closest('button[data-who]'); if(b){ who = b.dataset.who; renderTl(); } });
 if(pw) load().catch(() => { pw = ""; });
 </script>
 </body></html>
