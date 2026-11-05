@@ -2,7 +2,7 @@
 <header class="site"><div class="wrap"><a class="brand" href="index.html">태화여자고등학교<small>교무실 · 관리자 전용</small></a></div></header>
 <main><div class="wrap">
 <h1>회신서 관리</h1>
-<p class="muted" id="pv" hidden>미리보기입니다. 비밀번호는 1234이고, 접수 내용은 이 브라우저에만 저장됩니다.</p>
+
 <div id="login" class="card" style="max-width:420px">
 <form id="lf"><div class="field"><label class="t" for="pw">교무실 비밀번호</label><input type="password" id="pw" required></div><button class="btn dark">열기</button><div id="lout"></div></form>
 </div>
@@ -24,10 +24,9 @@
 <p class="muted">캐릭터 파일 로그인은 학번·비밀번호로 합니다. 이 창에서 <a href="login.html" style="text-decoration:underline">로그인 화면</a>으로 가면 공개 전에도 미리 볼 수 있습니다.</p>
 </div>
 </div></main>
-<script src="config.js?v=20261101a"></script><script src="app.js?v=20261026g"></script>
+<script src="config.js?v=20261101a"></script><script src="app.js?v=20261105"></script>
 <script>
 const $ = id => document.getElementById(id);
-if(TH.PREVIEW) document.getElementById('pv').hidden = false;
 engOnly($('pw'));
 let pw = ""; try { pw = sessionStorage.getItem('th_pw') || ""; } catch(e){}
 let data = null;
@@ -44,7 +43,7 @@ function render(){
 async function load(){
   data = await rpc('office_list', {p_password: pw});
   $('login').hidden = true; $('panel').hidden = false; render();
-  if(!TH.PREVIEW) renderTest(await rpc('office_test_list', {p_password: pw}));
+  renderTest(await rpc('office_test_list', {p_password: pw}));
 }
 // 캐릭터 테스트
 let tdata = null;
