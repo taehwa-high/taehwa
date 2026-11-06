@@ -12,14 +12,14 @@ const $ = id => document.getElementById(id), app = $('app');
 // 진행 상황은 이 화면에만 들고 있다. 카드를 확정해야 서버에 기록이 남고, 그 전에 나가면 처음부터 다시 할 수 있다
 let me = null;   // {nick, tester, answers}
 function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
-const ERR = {closed:"현재 테스트가 진행 중입니다.", noreply:"등록된 이름이 없습니다.", already:"이미 생존자 명부에 등록된 이름입니다."};
+const ERR = {closed:"가입이 불가합니다.", noreply:"등록된 이름이 없습니다.", already:"이미 생존자 명부에 등록된 이름입니다."};
 function fail(r){
   if(r.error === 'closed'){ closed(); return; }
   if(r.error === 'noreply' || r.error === 'already'){ signup(ERR[r.error]); return; }
   start();
 }
 
-function closed(){ me = null; app.innerHTML = '<div class="tst-wait"><p>현재 테스트가 진행 중입니다.</p></div>'; }
+function closed(){ me = null; app.innerHTML = '<div class="tst-wait"><p>가입이 불가합니다.</p></div>'; }
 
 function signup(err){
   me = null;
