@@ -167,6 +167,7 @@ document.querySelector('.otabs').addEventListener('click', async ev => {
     catch(e){ $('v-' + k).innerHTML = `<div class="msg err">${esc(e.message)}</div>`; }
   }
 });
+const lk = t => t.replace(/https?:\/\/[^\s<)]+/g, u => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
 const tbl = (head, rows) => `<div class="gwrap"><table class="gm"><thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
 function renderEv(){
   const e = gm.evidence;
@@ -174,7 +175,7 @@ function renderEv(){
     '<h2>지목 덱</h2><p class="muted">지목받을 때마다 번호 순서대로 한 장씩 나간다. 뒤 번호일수록 결정적이다.</p>' +
     e.deck.map(d => `<h3>${esc(d.who)}</h3>` + tbl(['번호', '증거', '가리키는 것'], d.rows.map(r => `<tr><td class="n">${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join(''))).join('') +
     '<h2>현장 탐사</h2>' +
-    e.scene.map(s => `<h3>${esc(s.place)}</h3>` + tbl(['번호', '증거', '관련 인물', '겉으로 가리키는 것', '진실'], s.rows.map(r => `<tr><td class="n">${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td class="truth">${esc(r[4])}</td></tr>`).join(''))).join('');
+    e.scene.map(s => `<h3>${esc(s.place)}</h3>` + tbl(['번호', '증거', '관련 인물', '겉으로 가리키는 것', '진실'], s.rows.map(r => `<tr><td class="n">${esc(r[0])}</td><td>${lk(esc(r[1]))}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td class="truth">${esc(r[4])}</td></tr>`).join(''))).join('');
 }
 function renderTl(){
   const names = ['우혜', '희지', '재희', '소록', '의현', '유림'];
