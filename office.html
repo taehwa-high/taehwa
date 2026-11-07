@@ -170,12 +170,11 @@ document.querySelector('.otabs').addEventListener('click', async ev => {
 const tbl = (head, rows) => `<div class="gwrap"><table class="gm"><thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
 function renderEv(){
   const e = gm.evidence;
-  $('v-ev').innerHTML = `<p class="lead">지목 덱 ${e.deck.reduce((a, d) => a + d.rows.length, 0)}개 · 현장 탐사 ${e.scene.reduce((a, s) => a + s.rows.length, 0)}개 · 몸수색 ${e.body.length}명. 범인은 배유림.</p>` +
+  $('v-ev').innerHTML = `<p class="lead">지목 덱 ${e.deck.reduce((a, d) => a + d.rows.length, 0)}개 · 현장 탐사 ${e.scene.reduce((a, s) => a + s.rows.length, 0)}개. 범인은 배유림.</p>` +
     '<h2>지목 덱</h2><p class="muted">지목받을 때마다 번호 순서대로 한 장씩 나간다. 뒤 번호일수록 결정적이다.</p>' +
     e.deck.map(d => `<h3>${esc(d.who)}</h3>` + tbl(['번호', '증거', '가리키는 것'], d.rows.map(r => `<tr><td class="n">${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join(''))).join('') +
     '<h2>현장 탐사</h2>' +
-    e.scene.map(s => `<h3>${esc(s.place)}</h3>` + tbl(['번호', '증거', '관련 인물', '겉으로 가리키는 것', '진실'], s.rows.map(r => `<tr><td class="n">${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td class="truth">${esc(r[4])}</td></tr>`).join(''))).join('') +
-    '<h2>몸수색</h2>' + tbl(['대상', '드러나는 것', '효과'], e.body.map(r => `<tr><td class="n">${esc(r[0])}</td><td>${esc(r[1])}</td><td class="truth">${esc(r[2])}</td></tr>`).join(''));
+    e.scene.map(s => `<h3>${esc(s.place)}</h3>` + tbl(['번호', '증거', '관련 인물', '겉으로 가리키는 것', '진실'], s.rows.map(r => `<tr><td class="n">${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td class="truth">${esc(r[4])}</td></tr>`).join(''))).join('');
 }
 function renderTl(){
   const names = ['우혜', '희지', '재희', '소록', '의현', '유림'];
